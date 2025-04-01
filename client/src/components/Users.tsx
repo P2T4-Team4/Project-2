@@ -1,7 +1,9 @@
 import React from 'react';
 
 import type { UserData } from "../interfaces/UserData";
-import auth from '../utils/auth';
+// import auth from '../utils/auth';
+// Commented out the import statement for auth as it is not used in this component yet
+
 
 // Define the props for the component
 interface UserListProps {
