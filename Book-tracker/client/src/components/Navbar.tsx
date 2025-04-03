@@ -21,9 +21,21 @@ const Navbar = () => {
   return (
     <div className="display-flex justify-space-between align-center py-2 px-5 mint-green">
       <h1>
-        Authentication Review
+        Book Tracker
       </h1>
       <div>
+        <button className="btn" type='button'>
+          <Link to="../pages/ReadPage">Books Read</Link>
+        </button>
+        <button className="btn" type='button'>
+          <Link to="../pages/WantToRead">Want to Read</Link>
+        </button>
+        <button className="btn" type='button'>
+          <Link to="../pages/Recommended">Recommended</Link>
+        </button>
+        <button className="btn" type='button'>
+          <Link to="../pages/Bio">Bio</Link>
+        </button>
         {
           // Conditional rendering based on loginCheck state
           !loginCheck ? (
@@ -39,6 +51,7 @@ const Navbar = () => {
           )
         }
       </div>
+
     </div>
   )
 }
