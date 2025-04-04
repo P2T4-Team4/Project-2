@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { fetchBooksByGenre } from "../api/booksAPI";
 import BookCard from "./BookCard";
+// import Book from "../interfaces/Book";
 
 interface Book {
     id: string;
     title: string;
     cover: string;
-    author: string; //needs to be removed? (below too)
+    author: string; //needs to be removed? (below)
     rating: number;
 }
 

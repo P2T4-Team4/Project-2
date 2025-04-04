@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/connection";
-// import User from "./User";
-// import Book from "./Book";
+import { User } from "./user";
+import Book from "./book";
 
 class ReadingList extends Model {
   public id!: string;
@@ -38,7 +38,7 @@ ReadingList.init(
   }
 );
 
-// User.hasMany(ReadingList, { foreignKey: "userId" });
-// Book.hasMany(ReadingList, { foreignKey: "bookId" });
+User.hasMany(ReadingList, { foreignKey: "userId" });
+Book.hasMany(ReadingList, { foreignKey: "bookId" });
 
 export default ReadingList;

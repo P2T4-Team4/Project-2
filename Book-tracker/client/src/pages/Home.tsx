@@ -1,30 +1,67 @@
-// import { useState, useEffect, useLayoutEffect } from "react";
-// import { retrieveUsers } from "../api/userAPI";
-// import type { UserData } from "../interfaces/UserData";
-// import ErrorPage from "./WantToRead";
-// import UserList from '../components/Users';
-// import auth from '../utils/auth';
-import React from "react";
+import { useState, useEffect } from "react";
 import GenreRow from "../components/GenreRow";
+import SearchBar from "../components/SearchBar";
+import { searchBooks } from "../api/booksAPI";
+import Book from "../interfaces/Book";
 
+const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
 
-const genres = ['Fantasy', 'Science Fiction', 'Mystery', 'Thriller', 'Romance', 'Horror', 'Non-Fiction', 'Historical Fiction'];
+const Home: React.FC = () => {
+    const [books, setBooks] = useState<Book>(''); // Store books per genre
+    const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results
+    const [searchQuery, setSearchQuery] = useState("");
 
-const Home : React.FC = () => {
+    // Fetch books for each genre on page load
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const fetchedBooks: Record<string, any[]> = {};
+            for (const genre of genres) {
+                const res = await fetch(`http://localhost:3000/books/search?q=${genre}`);
+                const data = await res.json();
+                fetchedBooks[genre] = data;
+            }
+            setBooks(fetchedBooks);
+        };
+        fetchBooks();
+    }, []);
+    
+
+    // Handle search
+    const handleSearch = async (query: string) => {
+        setSearchQuery(query);
+        if (query.trim()) {
+            const res = await fetch(`http://localhost:3000/books/search?q=${query}`);
+            const data = await res.json();
+            setSearchResults(data);
+        } else {
+            setSearchResults([]); // Clear search results when query is empty
+        }
+    };
+
     return (
         <div className="home">
             <h1>Welcome to Book Tracker!</h1>
-            <p>Explore your favorite genres:</p>
-            <ul>
-                {genres.map((genre, index) => (
-                    <GenreRow key={index} genre={genre} />
-                ))}
-            </ul>
+            <SearchBar onSearch={searchBooks} />
+            {searchQuery ? (
+                <div className="search-results">
+                    <h2>Search Results</h2>
+                    <GenreRow genre="Search Results" books={searchResults} />
+                </div>
+            ) : (
+                <>
+                    <p>Explore your favorite genres:</p>
+                    {genres.map((genre) => (
+                        <GenreRow key={genre} genre={genre} books={books[genre] || []} />
+                    ))}
+                </>
+            )}
         </div>
-    )
-}
+    );
+};
+
 
 export default Home;
+
 
 
 

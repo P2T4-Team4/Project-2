@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Book from "../interfaces/Book";
 
 const WantToRead = () => {
@@ -57,17 +57,30 @@ const WantToRead = () => {
     setNoBooksMessage("");
   }
 
-  // useEffect(() => {
-  //   const storedBooks = localStorage.getItem('wantToReadBooks');
-  //   let storedBooksList: Book[] = storedBooks ? JSON.parse(storedBooks) : [];
+  const moveToReadList = (book: Book) => {
+    const storedBooks = localStorage.getItem("wantToReadBooks");
+    const books = storedBooks ? JSON.parse(storedBooks) : [];
+    // remove the book from the want to read list
+    const updatedBooks = books.filter((b: Book) => b.title !== book.title);
+    localStorage.setItem("wantToReadBooks", JSON.stringify(updatedBooks));
+    // update the want to read list
+    setBookList(updatedBooks);
+    setNoBooksMessage("");
+    //update the read list
+    localStorage.setItem("readBooks", JSON.stringify(book));
+  };
+
+  useEffect(() => {
+    const storedBooks = localStorage.getItem('wantToReadBooks');
+    let storedBooksList: Book[] = storedBooks ? JSON.parse(storedBooks) : [];
     
-  //   if (storedBooksList.length === 0) {
-  //     setNoBooksMessage('No books are on the list. Please add some books.');
-  //   } else {
-  //     setBookList(storedBooksList);
-  //     setNoBooksMessage('');
-  //   }
-  // }, []);
+    if (storedBooksList.length === 0) {
+      setNoBooksMessage('No books are on the list. Please add some books.');
+    } else {
+      setBookList(storedBooksList);
+      setNoBooksMessage('');
+    }
+  }, []);
 
   return (
     <div>
@@ -76,7 +89,6 @@ const WantToRead = () => {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Thumbnail</th>
             <th>Title</th>
             <th>Authors</th>
@@ -87,10 +99,10 @@ const WantToRead = () => {
             <th>Description</th>
             <th>Rating</th>
             <th>Remove</th>
+            <th>Actions</th>
           </tr>
           {bookList.map((book: Book, index: number) => (
             <tr key={index}>
-              <td>{index + 1}</td>
               <td><img src={book.thumbnail} alt={book.title} /></td>
               <td>{book.title}</td>
               <td>{book.author.join(", ")}</td>
@@ -101,6 +113,7 @@ const WantToRead = () => {
               <td>{book.description}</td>
               <td>{book.rating}</td>
               <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
+              <td><button onClick={() => moveToReadList(book)}>Move to Read List</button></td>
             </tr>
           ))}
         </thead>

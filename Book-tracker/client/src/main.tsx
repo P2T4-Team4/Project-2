@@ -7,6 +7,7 @@ import Login from './pages/Login.tsx';
 import BookRecommendations from './pages/Recommend.tsx';
 import WantToRead from './pages/WantToRead.tsx';
 import ErrorPage from './pages/Bio.tsx';
+import ReadPage from './pages/ReadPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -28,16 +29,16 @@ const router = createBrowserRouter([
       },
       {
         path: '/ReadPage',
-        element: <ErrorPage />
+        element: <ReadPage />
       },
       {
         path: '/WantToRead',
         element: <WantToRead />
       },
-      {
-        path: '/Bio',
-        element: <ErrorPage />
-      }
+      // {
+      //   path: '/Bio',
+      //   element: <ErrorPage />
+      // }
     ]
   }
 ])
