@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { fetchBooksByGenre } from "../api/booksAPI";
-import BookCard from "./BookCard";
+import { fetchBooksByGenre } from "../api/booksAPI.js";
+import BookCard from "./BookCard.js";
 // import Book from "../interfaces/Book";
 
 interface Book {

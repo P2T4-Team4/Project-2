@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import auth from '../utils/auth';
+import auth from '../utils/auth.js';
 import '../CSS/Navbar.css';
 const Navbar = () => {
   // State to track the login status

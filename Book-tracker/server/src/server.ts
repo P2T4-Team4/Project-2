@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-import sequelize from './config/connection.js';
+import { sequelize } from './config/connection.js';
 import routes from './routes/index.js';
-import { searchBooks } from '.../client/src/pages/Home.tsx'; 
+import {searchBooks} from './Controllers/SearchController.js'; // Adjust the import path as necessary
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,7 +16,7 @@ app.use(express.static('../client/dist'));
 
 app.use(express.json());
 app.use(routes);
-app.use('/api/books/search', searchBooks); // Search for books using Google Books API
+app.get('/', searchBooks); // Search for books using Google Books API
 
 sequelize.sync({force: forceDatabaseRefresh}).then(() => {
   app.listen(PORT, () => {

@@ -9,6 +9,7 @@ interface Book {
     thumbnail: string;
     rating: string;
     id: string;
+    books: string[];
 }
 
 export default Book;

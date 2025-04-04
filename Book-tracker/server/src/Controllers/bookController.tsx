@@ -25,7 +25,7 @@ import { Request, Response } from "express";
 
 const genres = ['fiction', 'mystery', 'romance', 'fantasy', 'non-fiction', 'science fiction'];
 
-export async function getBooksForHomepage(req: Request, res: Response) {
+export async function getBooksForHomepage(_req: Request, res: Response) {
     const apiKey = process.env.GOOGLE_BOOKS_API_KEY; // Your Google Books API key
 
     try {

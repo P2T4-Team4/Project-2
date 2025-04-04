@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000/api/books";
+const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 export const fetchFinishedBooks = async () => {
     try {
@@ -23,16 +24,10 @@ export const fetchBooksByGenre = async (genre: string) => {
 }
 
     export const searchBooks = async (query : string) => {
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`;
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${GOOGLE_BOOKS_API_KEY}`;
         
         try {
-            const response = await fetch(url,
-            {
-                headers: {
-                    Authorization: `Bearer ${import.meta.env.GOOGLE_BOOKS_API_KEY}`,
-          }
-        
-         });
+            const response = await fetch(url);
             const data = await response.json();
             if (!response.ok) {
                 throw new Error("Invalid API response: Error fetching books");
@@ -42,4 +37,4 @@ export const fetchBooksByGenre = async (genre: string) => {
             console.error("Error fetching books:", error);
             return [];
         }
-    }
+    };

@@ -1,6 +1,6 @@
 import express from "express";
 import { addtoreadinglist, getReadingList, updateReadingList, deleteFromReadingList } from "../Controllers/readingList"; 
-import { authenticateToken } from "../middleware/auth"; // Corrected the path to the authentication middleware
+import { authenticateToken } from "../middleware/auth.js"; // Corrected the path to the authentication middleware
 
 const router = express.Router();
 

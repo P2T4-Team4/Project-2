@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // import { fetchFinishedBooks } from '../api/booksAPI';
 // import BookList from '../components/BookList';
-import Book from '../interfaces/Book';
+import Book from '../interfaces/Book.js';
 
 
 // interface Book {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Book from "../interfaces/Book";
+import Book from "../interfaces/Book.js";
 
 const WantToRead = () => {
   

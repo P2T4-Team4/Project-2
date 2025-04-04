@@ -102,4 +102,4 @@ router.post('/register', async (req: Request, res: Response) => {
 //   }
 // });
 
-// export { router as userRouter };
+export { router as userRouter };
