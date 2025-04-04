@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import ReadingList from "../models/ReadingList";
-import Book from "../models/book";
+import ReadingList from "../models/ReadingList.js";
+import Book from "../models/book.js";
+// import { Model, DataTypes } from "sequelize";
 
 export const addtoreadinglist = async (req: Request, res: Response) => {
     const { userId, bookId } = req.body;

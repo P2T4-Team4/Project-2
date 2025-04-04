@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Book from '../interfaces/Book';
+import Book from '../interfaces/Book.js';
 import '../CSS/Recommend.css';
 
 

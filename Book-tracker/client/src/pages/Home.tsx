@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import GenreRow from "../components/GenreRow";
-import SearchBar from "../components/SearchBar";
-import { searchBooks } from "../api/booksAPI";
-import Book from "../interfaces/Book";
+import GenreRow from "../components/GenreRow.js";
+import SearchBar from "../components/SearchBar.js";
+import { searchBooks } from "../api/booksAPI.js";
+import Book from "../interfaces/Book.js";
 
 const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
 
 const Home: React.FC = () => {
-    const [books, setBooks] = useState<Book>(''); // Store books per genre
+    const [books, setBooks] = useState<Record<string, Book[]>>({}); // Store books per genre
     const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -26,17 +26,17 @@ const Home: React.FC = () => {
     }, []);
     
 
-    // Handle search
-    const handleSearch = async (query: string) => {
-        setSearchQuery(query);
-        if (query.trim()) {
-            const res = await fetch(`http://localhost:3000/books/search?q=${query}`);
-            const data = await res.json();
-            setSearchResults(data);
-        } else {
-            setSearchResults([]); // Clear search results when query is empty
-        }
-    };
+    // // Handle search
+    // const handleSearch = async (query: string) => {
+    //     setSearchQuery(query);
+    //     if (query.trim()) {
+    //         const res = await fetch(`http://localhost:3000/books/search?q=${query}`);
+    //         const data = await res.json();
+    //         setSearchResults(data);
+    //     } else {
+    //         setSearchResults([]); // Clear search results when query is empty
+    //     }
+    // };
 
     return (
         <div className="home">

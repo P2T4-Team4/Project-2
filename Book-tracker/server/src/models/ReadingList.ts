@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../config/connection";
-import { User } from "./user";
-import Book from "./book";
+import {sequelize} from "../config/connection.js";
+// import { User } from "./user.js";
+// import Book from "./book.js";
 
 class ReadingList extends Model {
   public id!: string;
@@ -38,7 +38,10 @@ ReadingList.init(
   }
 );
 
-User.hasMany(ReadingList, { foreignKey: "userId" });
-Book.hasMany(ReadingList, { foreignKey: "bookId" });
+// User.hasMany(ReadingList, { foreignKey: "userId" });
+// Book.hasMany(ReadingList, { foreignKey: "bookId" });
+// ReadingList.belongsTo(User, { foreignKey: "userId" });
+// ReadingList.belongsTo(Book, { foreignKey: "bookId" });
+
 
 export default ReadingList;
