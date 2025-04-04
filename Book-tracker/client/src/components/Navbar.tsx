@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import auth from '../utils/auth';
-
+import '../CSS/Navbar.css';
 const Navbar = () => {
   // State to track the login status
   const [loginCheck, setLoginCheck] = useState(false);
@@ -21,20 +21,23 @@ const Navbar = () => {
   return (
     <div className="display-flex justify-space-between align-center py-2 px-5 mint-green">
       <h1>
-        Book Tracker
+        Book Tracker📖
       </h1>
       <div>
         <button className="btn" type='button'>
-          <Link to="../pages/ReadPage">Books Read</Link>
+          <Link to="/">Home🏡</Link>
         </button>
         <button className="btn" type='button'>
-          <Link to="../pages/WantToRead">Want to Read</Link>
+          <Link to="/ReadPage">Books Read✔️</Link>
         </button>
         <button className="btn" type='button'>
-          <Link to="../pages/Recommended">Recommended</Link>
+          <Link to="/WantToRead">Want to Read⭕</Link>
         </button>
         <button className="btn" type='button'>
-          <Link to="../pages/Bio">Bio</Link>
+          <Link to="/Recommended">Recommended💡</Link>
+        </button>
+        <button className="btn" type='button'>
+          <Link to="/Bio">Bio📝</Link>
         </button>
         {
           // Conditional rendering based on loginCheck state

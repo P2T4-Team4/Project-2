@@ -1,7 +1,7 @@
 import sequelize from '../config/connection.js'
 import { UserFactory } from './user.js';
-// import Book from './book.js';
-// import ReadingList from './ReadingList.js';
+import Book from './book.js';
+import ReadingList from './ReadingList.js';
 
 const User = UserFactory(sequelize);
 
@@ -16,6 +16,5 @@ const syncDatabase = async () => {
     }
 };
 
-export { sequelize, syncDatabase };
+export { sequelize, syncDatabase, ReadingList, Book };
 
-// add into export Book, ReadingList

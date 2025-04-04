@@ -7,6 +7,7 @@ class Book extends Model {
   public author!: string;
   public genre!: string;
   public cover!: string;
+  public description!: string;
 }
 
 Book.init(
@@ -30,6 +31,10 @@ Book.init(
     },
     cover: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    description: {
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   },

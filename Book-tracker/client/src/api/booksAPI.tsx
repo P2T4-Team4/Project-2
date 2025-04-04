@@ -21,3 +21,25 @@ export const fetchBooksByGenre = async (genre: string) => {
         return [];
     }
 }
+
+    export const searchBooks = async (query : string) => {
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`;
+        
+        try {
+            const response = await fetch(url,
+            {
+                headers: {
+                    Authorization: `Bearer ${import.meta.env.GOOGLE_BOOKS_API_KEY}`,
+          }
+        
+         });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error("Invalid API response: Error fetching books");
+            }
+            return data.items || [];
+        } catch (error) {
+            console.error("Error fetching books:", error);
+            return [];
+        }
+    }
