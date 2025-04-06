@@ -54,6 +54,17 @@ const BookRecommendations: React.FC = () => {
 
   return (
     <div className="recommendations">
+      <h1>Saved Books</h1>
+      <div>
+        {savedBooks.map((book) => (
+          <div key={book.id} className="book-card">
+            <img src={book.thumbnail} alt={book.title} />
+            <h2>{book.title}</h2>
+            <p>{book.author}</p>
+            <p>Rating: {book.rating}</p>
+          </div>
+        ))}
+      </div>
       <h1 className="title">Recommended Books for You📚</h1>
 
       {loading && <p className="loading">Loading recommendations...</p>}
@@ -63,7 +74,7 @@ const BookRecommendations: React.FC = () => {
           <div key={book.id} className="book-card">
             <img src={book.thumbnail} alt={book.title} className="book-thumbnail" />
             <h2 className="book-title">{book.title}</h2>
-            <p className="book-authors">{book.author.join(', ')}</p>
+            <p className="book-authors">{book.author}</p>
             <p className="book-rating">Rating: {book.rating}</p>
           </div>
         ))}

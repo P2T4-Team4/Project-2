@@ -1,15 +1,14 @@
 interface Book {
     title: string;
-    author: string[];
+    author: string;
     description: string;
     publisher: string;
     publishedDate: string;
     pageCount: number;
     categories: string[];
     thumbnail: string;
-    rating: string;
+    rating: number;
     id: string;
-    books: string[];
 }
 
 export default Book;
