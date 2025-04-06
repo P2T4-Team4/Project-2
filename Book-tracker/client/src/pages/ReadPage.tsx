@@ -65,7 +65,7 @@ const ReadPage = () => {
               <tr key={index}>
               <td><img src={book.thumbnail} alt={book.title} /></td>
               <td>{book.title}</td>
-              <td>{book.author.join(", ")}</td>
+              <td>{book.author}</td>
               <td>{book.publisher}</td>
               <td>{book.publishedDate}</td>
               <td>{book.pageCount}</td>

@@ -4,26 +4,27 @@ import {sequelize} from "../config/connection.js";
 // import Book from "./book.js";
 
 class ReadingList extends Model {
-  public id!: string;
-  public userId!: string;
-  public bookId!: string;
+  public id!: number;
+  public userId!: number;
+  public bookId!: number;
   public status!: "reading" | "completed" | "wishlist";
 }
 
 ReadingList.init(
   {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     userId: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: "Users", key: "id" },
     },
     bookId: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: "Books", key: "id" },
     },

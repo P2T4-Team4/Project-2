@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import GenreRow from "../components/GenreRow.js";
 import SearchBar from "../components/SearchBar.js";
-import { searchBooks } from "../api/booksAPI.js";
+// import { searchBooks } from "../api/booksAPI.js";
 import Book from "../interfaces/Book.js";
 
 const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Record<string, Book[]>>({}); // Store books per genre
-    const [searchResults, setSearchResults] = useState<any[]>([]); // Store search results
+    const [searchResults, setSearchResults] = useState<Book[]>([]); // Store search results
     const [searchQuery, setSearchQuery] = useState("");
 
     // Fetch books for each genre on page load
     useEffect(() => {
         const fetchBooks = async () => {
-            const fetchedBooks: Record<string, any[]> = {};
+            const fetchedBooks: Record<string, Book[]> = {};
             for (const genre of genres) {
                 const res = await fetch(`http://localhost:3000/books/search?q=${genre}`);
                 const data = await res.json();
@@ -27,21 +27,21 @@ const Home: React.FC = () => {
     
 
     // // Handle search
-    // const handleSearch = async (query: string) => {
-    //     setSearchQuery(query);
-    //     if (query.trim()) {
-    //         const res = await fetch(`http://localhost:3000/books/search?q=${query}`);
-    //         const data = await res.json();
-    //         setSearchResults(data);
-    //     } else {
-    //         setSearchResults([]); // Clear search results when query is empty
-    //     }
-    // };
+    const handleSearch = async (query: string) => {
+        setSearchQuery(query);
+        if (query.trim()) {
+            const res = await fetch(`http://localhost:3000/books/search?q=${query}`);
+            const data = await res.json();
+            setSearchResults(data);
+        } else {
+            setSearchResults([]); // Clear search results when query is empty
+        }
+    };
 
     return (
         <div className="home">
             <h1>Welcome to Book Tracker!</h1>
-            <SearchBar onSearch={searchBooks} />
+            <SearchBar onSearch={handleSearch} />
             {searchQuery ? (
                 <div className="search-results">
                     <h2>Search Results</h2>
