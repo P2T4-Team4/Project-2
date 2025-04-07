@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Request, Response } from "express";
 
-const genres = ['fiction', 'mystery', 'romance', 'fantasy', 'non-fiction', 'science fiction'];
+const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
 
 export async function getBooksForHomepage(_req: Request, res: Response) {
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY; // Your Google Books API key
@@ -13,7 +13,7 @@ export async function getBooksForHomepage(_req: Request, res: Response) {
   try {
     // Create an array of promises for fetching books for each genre
     const genreBooksPromises = genres.map(async (genre) => {
-      const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&key=${apiKey}`;
+      const url = `https://www.googleapis.com/books/v1/volumes?q=subject:${genre}&maxResults=20&key=${apiKey}`;
       const response = await axios.get(url);
 
       const books = (response.data.items || []).map((item: any) => ({

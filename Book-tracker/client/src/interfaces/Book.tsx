@@ -9,6 +9,8 @@ interface Book {
     thumbnail: string;
     rating: number;
     id: string;
+    coverImageUrl: string;
+    genre: string;
 }
 
 export default Book;
