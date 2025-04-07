@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000/api/books";
+const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001/api/books";
 const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 export const fetchFinishedBooks = async () => {

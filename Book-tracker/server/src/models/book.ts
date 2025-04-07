@@ -6,15 +6,15 @@ class Book extends Model {
   public title!: string;
   public author!: string;
   public genre!: string;
-  public cover!: string;
+  public coverImageUrl!: string;
   public description!: string;
 }
 
 Book.init(
   {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
+      defaultValue: DataTypes.INTEGER,
       primaryKey: true,
     },
     title: {
@@ -29,7 +29,7 @@ Book.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    cover: {
+    coverImageUrl: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -43,5 +43,7 @@ Book.init(
     modelName: "Book",
   }
 );
+
+
 
 export default Book;

@@ -1,25 +1,57 @@
-const forceDatabaseRefresh = false;
-
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-import express from 'express';
-import { sequelize } from './config/connection.js';
-import routes from './routes/index.js';
-import {searchBooks} from './Controllers/SearchController.js'; // Adjust the import path as necessary
+import express from "express";
+import cors from "cors";
+
+import { sequelize } from "./config/connection.js";
+import routes from "./routes/index.js";
+import bookRoutes from "./routes/bookRoutes.js";
+import { searchBooks } from "./Controllers/SearchController.js";
+import { getBooksForHomepage } from "./Controllers/bookController.js";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+const forceDatabaseRefresh = false;
 
-// Serves static files in the entire client's dist folder
-app.use(express.static('../client/dist'));
 
+// === Middleware ===
 app.use(express.json());
-app.use(routes);
-app.get('/', searchBooks); // Search for books using Google Books API
 
-sequelize.sync({force: forceDatabaseRefresh}).then(() => {
+app.use(cors({
+  origin: 'http://localhost:3001', 
+  credentials: true
+}));
+
+// === API Routes ===
+app.use("/api/books", bookRoutes);               
+app.get("/api/search", searchBooks);             
+app.get("/api/books/home", getBooksForHomepage);       
+
+// === Use Additional Routes if needed ===
+app.use(routes); // Only if routes/index.js exists and is needed
+
+
+// === Start Server ===
+sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
   app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+    console.log(`✅ Server running on port ${PORT}`);
   });
 });
+
+
+
+
+
+
+// Utilities to use __dirname in ES modules
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+// === Serve frontend (only after API routes) ===
+// const clientDistPath = path.join(__dirname, "../client/dist");
+// app.use(express.static(clientDistPath));
+
+// // === Catch-all: Serve index.html for React Router ===
+// app.get("*", (_req, res) => {
+//   res.sendFile(path.join(clientDistPath, "index.html"));
+// });

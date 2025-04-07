@@ -8,3 +8,4 @@ router.post("/add", authenticateToken, addtoreadinglist); // Add authentication 
 router.get("/:userId", authenticateToken, getReadingList); // Add authentication middleware
 router.patch("/:id", authenticateToken, updateReadingList); // Add authentication middleware
 router.delete("/:id", authenticateToken, deleteFromReadingList); // Add authentication middleware
+

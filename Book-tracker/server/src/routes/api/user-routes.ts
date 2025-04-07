@@ -19,7 +19,15 @@ router.post('/register', async (req: Request, res: Response) => {
 // remove the email part
 
 
-
+// // NEW CODE
+// router.get("/", async (_req, res) => {
+//   try {
+//     const users = await User.findAll();
+//     res.json(users);
+//   } catch (err) {
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
 
 
 
