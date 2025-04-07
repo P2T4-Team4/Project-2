@@ -52,8 +52,8 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       },
     },
     {
-      modelName: 'users',  // Name of the model
-      tableName: 'users',  // Name of the table in PostgreSQL
+      modelName: 'user',  // Name of the model
+      tableName: 'user',  // Name of the table in PostgreSQL
       sequelize,            // The Sequelize instance that connects to PostgreSQL
       hooks: {
         // Before creating a new user, hash and set the password

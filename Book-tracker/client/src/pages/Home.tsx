@@ -6,6 +6,9 @@ import Book from "../interfaces/Book.js";
 
 const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
 
+const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API; adjust as needed
+console.log("API_URL in Home.tsx:", API_URL); // Log the API URL to ensure it's being set correctly
+
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Record<string, Book[]>>({}); // Store books per genre
     const [searchResults, setSearchResults] = useState<Book[]>([]); // Store search results
@@ -14,29 +17,44 @@ const Home: React.FC = () => {
     // Fetch books for each genre on page load
     useEffect(() => {
         const fetchBooks = async () => {
-            const fetchedBooks: Record<string, Book[]> = {};
-            for (const genre of genres) {
-                const res = await fetch(`http://localhost:3000/books/search?q=${genre}`);
-                const data = await res.json();
-                fetchedBooks[genre] = data;
-            }
-            setBooks(fetchedBooks);
+          try {
+            const res = await fetch(`${API_URL}/books/home`); 
+            const data = await res.json();
+            setBooks(data);
+          } catch (err) {
+            console.error("Error fetching homepage books:", err);
+          }
         };
         fetchBooks();
-    }, []);
-    
+      }, []);
+      
 
     // // Handle search
     const handleSearch = async (query: string) => {
         setSearchQuery(query);
+      
         if (query.trim()) {
-            const res = await fetch(`http://localhost:3000/books/search?q=${query}`);
+          try {
+            const res = await fetch(`${API_URL}/books/search?q=${query}
+                `); 
+      
+            if (!res.ok) {
+              const errorText = await res.text();
+              console.error(`Server error: ${res.status}`, errorText);
+              return;
+            }
+      
             const data = await res.json();
+            console.log("Search results:", data);
             setSearchResults(data);
+          } catch (err) {
+            console.error("Fetch error:", err);
+          }
         } else {
-            setSearchResults([]); // Clear search results when query is empty
+          setSearchResults([]);
         }
-    };
+      };
+      
 
     return (
         <div className="home">

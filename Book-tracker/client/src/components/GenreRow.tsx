@@ -18,15 +18,7 @@ type GenreRowProps = {
 }
 
 const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
-    // const [books, setBooks] = useState<Book[]>([]);
 
-    // useEffect(() => {
-    //     const fetchBooks = async () => {
-    //         const fetchedBooks = await fetchBooksByGenre(genre);
-    //         setBooks(fetchedBooks);
-    //     };
-    //     fetchBooks();
-    // }, [genre]);
 
     return (
         <div className="genre-row">
