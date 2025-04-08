@@ -1,6 +1,6 @@
 interface Book {
     title: string;
-    author: string;
+    authors: string[];
     description: string;
     publisher: string;
     publishedDate: string;
@@ -9,7 +9,6 @@ interface Book {
     thumbnail: string;
     rating: number;
     id: string;
-    coverImageUrl: string;
     genre: string;
 }
 

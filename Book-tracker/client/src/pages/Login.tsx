@@ -8,7 +8,8 @@ const Login = () => {
   // State to manage the login form data
   const [loginData, setLoginData] = useState<UserLogin>({
     username: '',
-    password: ''
+    password: '',
+    // email: ''
   });
 
   // Handle changes in the input fields

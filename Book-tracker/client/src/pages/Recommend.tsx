@@ -4,9 +4,9 @@ import Book from '../interfaces/Book.js';
 import '../CSS/Recommend.css';
 
 
-const GOOGLE_BOOKS_API_KEY = 'AIzaSyBWlIaquf4-vAgM-6c8A8ICfKbBXsgobU8';
+// const GOOGLE_BOOKS_API_KEY = 'AIzaSyBWlIaquf4-vAgM-6c8A8ICfKbBXsgobU8';
 const GoogleBooksAPI = 'https://www.googleapis.com/books/v1/volumes?q=';
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 const BookRecommendations: React.FC = () => {
   const [savedBooks, setSavedBooks] = useState<Book[]>([]);
@@ -15,10 +15,23 @@ const BookRecommendations: React.FC = () => {
 
   // Fetch saved books from localStorage
   useEffect(() => {
-    const storedBooks = JSON.parse(localStorage.getItem('savedBooks') || '[]');
-    setSavedBooks(storedBooks);
-    if (storedBooks.length > 0) {
-      fetchRecommendations(storedBooks);
+    const wantToReadBooks = JSON.parse(localStorage.getItem('wantToReadBooks') || '[]');
+    const readBooks = JSON.parse(localStorage.getItem('readBooks') || '[]');
+
+    
+    const allBooksMap = new Map<string, Book>();
+    [...wantToReadBooks, ...readBooks].forEach((book: Book) => {
+      allBooksMap.set(book.id, book);
+    });
+
+    const combinedBooks = Array.from(allBooksMap.values());
+    setSavedBooks(combinedBooks);
+
+    
+    localStorage.setItem('savedBooks', JSON.stringify(combinedBooks));
+
+    if (combinedBooks.length > 0) {
+      fetchRecommendations(combinedBooks);
     }
   }, []);
 
@@ -33,7 +46,13 @@ const BookRecommendations: React.FC = () => {
         .join('|'); 
 
       // Fetch recommendations from Google Books API
-      const response = await axios.get(`${GoogleBooksAPI}${searchQuery}&key=${GOOGLE_BOOKS_API_KEY}`);
+      console.log('Search query:', searchQuery);
+      console.log('API URL:', API_URL);
+      console.log('Google Books API:', GoogleBooksAPI);
+      console.log('Full URL:', `${GoogleBooksAPI}${searchQuery}&key=${API_URL}`);
+      console.log(`${GoogleBooksAPI}${searchQuery}&key=${API_URL}`);
+      
+      const response = await axios.get(`${GoogleBooksAPI}${searchQuery}&key=${API_URL}`);
       
       if (response.data.items) {
         setRecommendedBooks(
@@ -61,7 +80,7 @@ const BookRecommendations: React.FC = () => {
           <div key={book.id} className="book-card">
             <img src={book.thumbnail} alt={book.title} />
             <h2>{book.title}</h2>
-            <p>{book.author}</p>
+            <p>{book.authors}</p>
             <p>Rating: {book.rating}</p>
           </div>
         ))}
@@ -75,7 +94,7 @@ const BookRecommendations: React.FC = () => {
           <div key={book.id} className="book-card">
             <img src={book.thumbnail} alt={book.title} className="book-thumbnail" />
             <h2 className="book-title">{book.title}</h2>
-            <p className="book-authors">{book.author}</p>
+            <p className="book-authors">{book.authors}</p>
             <p className="book-rating">Rating: {book.rating}</p>
           </div>
         ))}
