@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 interface UserAttributes {
   id: number;
   username: string;
-  email: string;
   password: string;
 }
 
@@ -16,7 +15,6 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
-  public email!: string;
   public password!: string;
 
   public readonly createdAt!: Date;
@@ -26,6 +24,10 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public async setPassword(password: string) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(password, saltRounds);
+  }
+  // Method to check if the provided password matches the hashed password
+  public async checkPassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
   }
 }
 
@@ -39,10 +41,6 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         primaryKey: true,
       },
       username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },

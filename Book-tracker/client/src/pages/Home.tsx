@@ -10,6 +10,10 @@ const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Roman
 const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API; adjust as needed
 console.log("API_URL in Home.tsx:", API_URL); // Log the API URL to ensure it's being set correctly
 
+// const Auth = {
+//   getToken: () => {localStorage.getItem("token")},
+// }
+
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Record<string, Book[]>>({}); // Store books per genre
     const [searchResults, setSearchResults] = useState<Book[]>([]); // Store search results
@@ -59,6 +63,8 @@ const Home: React.FC = () => {
         }
       };
       
+      
+
 
     return (
         <div className="home">
