@@ -37,5 +37,9 @@ const router = Router();
 
 // POST /login - Login a user
 router.post('/login', login);  // Define the login route
+// router.post('/register');
+// router.get('/profile');
+// router.put('/profile');
+
 
 export default router;  // Export the router instance

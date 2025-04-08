@@ -1,49 +1,4 @@
-// // import React, {useEffect, useState} from "react";
-// import React from "react";
-// // import { fetchBooksByGenre } from "../api/booksAPI.js";
-// import BookCard from "./BookCard.js";
-// // import Book from "../interfaces/Book";
-// // import Book from "../interfaces/Book.js";
-// // import "../styles/GenreRow.css";
 
-// type Book = {
-//     id: string;
-//     title: string;
-//     // cover: string;
-//     author: string; //needs to be removed? (below)
-//     rating: number;
-//     coverImageUrl: string;
-// }
-
-// type GenreRowProps = {
-//     genre: string;
-//     books: Book[];
-// }
-
-// const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
-
-
-//     return (
-//         <div className="genre-row">
-//             <h2>{genre}</h2>
-//             <div className="book-list">
-//                 <ul>
-//                 {books.map((book) => (
-//                     // <BookCard key={book.id} {...book} />
-//                     <li key={book.id}>
-//                         <BookCard book={book} />
-//                         <p>Author: {book.author}</p>
-//                         <p>Rating: {book.rating}</p>
-//                     </li>
-//                 ))}
-//                 </ul>
-//             </div>
-//         </div>
-//     );
-// }
-
-
-// export default GenreRow;
 
 import React from "react";
 import BookCard from "./BookCard.js";
@@ -62,20 +17,59 @@ type GenreRowProps = {
   books: Book[];
 };
 
+// // const [alreadyWantToReadMessage, setAlreadyWantToReadMessage] = React.useState<string>('');
+// // const [alreadyReadBooksMessage, setAlreadyReadBooksMessage] = React.useState<string>('');
+
+const addWantToRead = (book: Book) => {
+  // Want to grab the book id and add it to the want to read list
+  const currentBook = book;
+  const storedBooks = localStorage.getItem("wantToReadBooks");
+  const wantToReadBooks = storedBooks ? JSON.parse(storedBooks) : [];
+  const bookExists = wantToReadBooks.some((book: Book) => book.id === currentBook.id);
+  if (!bookExists) {
+    wantToReadBooks.push(currentBook);
+    localStorage.setItem("wantToReadBooks", JSON.stringify(wantToReadBooks));
+  }
+  // } else {
+  //   // setAlreadyWantToReadMessage("Already in Want to Read List");
+  //   setTimeout(() => {
+  //     // setAlreadyWantToReadMessage("");
+  //   }, 2000);
+  // }
+};
+
+const addReadBooks = (book: Book) => {
+  // Want to grab the book id and add it to the want to read list
+  const currentBook = book;
+  const storedBooks = localStorage.getItem("readBooks");
+  const readBooks = storedBooks ? JSON.parse(storedBooks) : [];
+  const bookExists = readBooks.some((book: Book) => book.id === currentBook.id);
+  if (!bookExists) {
+    readBooks.push(currentBook);
+    localStorage.setItem("readBooks", JSON.stringify(readBooks));
+  }
+  // } else {
+  //   setAlreadyReadBooksMessage("Already in Read Book List");
+  //   setTimeout(() => {
+  //     setAlreadyReadBooksMessage("");
+  //   }, 2000);
+  // }
+};
+
 const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
     return (
       <div className="genre-row mb-10 px-4">
         <h2 className="text-2xl font-bold capitalize mb-4">{genre}</h2>
-        <div className="flex overflow-x-auto space-x-4">
+        <div className="flex overflow-x-auto space-x-4 scrollbar-hide pb-4">
           {books.map((book) => (
             <div key={book.id} className="flex-shrink-0 w-40">
-              <div className="book-card">
+              <div>
                 {/* Book cover image */}
                 {book.thumbnail ? (
                   <img
                     src={book.thumbnail}
                     alt={book.title}
-                    className="w-full h-56 object-cover rounded-md"
+                    className="w-full h-56 object-cover rounded-md shadow-md hover:scale-105 transition-transform duration-200"
                   />
                 ) : (
                   <div className="w-full h-56 bg-gray-300 rounded-md flex items-center justify-center text-gray-600">
@@ -84,8 +78,13 @@ const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
                 )}
                 <BookCard book={book} />
               </div>
-              <p className="text-sm text-center mt-2">Author: {book.author}</p>
+              <p className="text-lg text-center mt-2">{book.title}</p>
+              <p className="text-sm text-center mt-1">Author: {book.authors}</p>
               <p className="text-sm text-center">Rating: {book.rating}</p>
+              <button onClick={() => addWantToRead(book)}>Want To Read</button>
+              <button onClick={() => addReadBooks(book)}>Books Read</button>
+              {/* {alreadyWantToReadMessage ? (<p>{alreadyWantToReadMessage}</p>) : null}
+              {alreadyReadBooksMessage ? (<p>{alreadyReadBooksMessage}</p>) : null} */}
             </div>
           ))}
         </div>

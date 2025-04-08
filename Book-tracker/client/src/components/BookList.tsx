@@ -1,12 +1,13 @@
 import React from "react";
 import BookCard from "./BookCard.js";
+import Book from "../interfaces/Book.js";
 
-interface Book {
-    id: string;
-    title: string;
-    author: string;
-    rating: number;
-}
+// interface Book {
+//     id: string;
+//     title: string;
+//     author: string;
+//     rating: number;
+// }
 
 const BookList: React.FC<{ books: Book[] }> = ({ books }) => {
     if (books.length === 0) {

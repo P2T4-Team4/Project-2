@@ -17,7 +17,7 @@ export const searchBooks = async (req: Request, res: Response) => {
         const books = response.data.items.map((item: any) => ({
         id: item.id,
         title: item.volumeInfo.title,
-        authors: item.volumeInfo.authors || [],
+        authors: item.volumeInfo.authors?.join(",") || [],
         thumbnail: item.volumeInfo.imageLinks?.thumbnail || "",
         rating: item.volumeInfo.averageRating || "N/A",
         genre: item.volumeInfo.categories ? item.volumeInfo.categories[0] : "Unknown",

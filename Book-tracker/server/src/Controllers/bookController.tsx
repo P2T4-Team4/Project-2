@@ -19,7 +19,7 @@ export async function getBooksForHomepage(_req: Request, res: Response) {
       const books = (response.data.items || []).map((item: any) => ({
         id: item.id,
         title: item.volumeInfo.title || "Unknown Title",  // Added fallback if title is missing
-        authors: item.volumeInfo.authors || [],
+        authors: item.volumeInfo.authors?.join(",") || 'Unknown Author', // Added fallback if authors are missing
         thumbnail: item.volumeInfo.imageLinks?.thumbnail || "",
         rating: item.volumeInfo.averageRating || "N/A",
         genre: item.volumeInfo.categories ? item.volumeInfo.categories[0] : "Unknown",
@@ -40,7 +40,7 @@ export async function getBooksForHomepage(_req: Request, res: Response) {
     // Send the result to the frontend
     res.json(booksMap);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching books for homepage" });
+    res.status(500).json({ message: "Error fetching books for homepage", error } );
     return;
   }
 }
