@@ -44,33 +44,22 @@ const ReadPage = () => {
 
   return (
     <div>
-      <h1>Books Read List</h1>
-      {noReadBooksMessage ? (<p>{noReadBooksMessage}</p>) : readBookList.length > 0 ? (
+      <h1 className='center'>Books Read List</h1>
+      {noReadBooksMessage ? (<p className='center'>{noReadBooksMessage}</p>) : readBookList.length > 0 ? (
         <table>
           <thead>
             <tr>
               <th>Thumbnail</th>
               <th>Title</th>
               <th>Authors</th>
-              <th>Publisher</th>
-              <th>Published Date</th>
-              <th>Page Count</th>
-              <th>Categories</th>
-              <th>Description</th>
               <th>Rating</th>
               <th>Remove</th>
-              <th>Actions</th>
             </tr>
             {readBookList.map((book: Book, index: number) => (
               <tr key={index}>
-              <td><img src={book.thumbnail} alt={book.title} /></td>
+              <td><img src={book.thumbnail} alt={book.title} style={{ height: '100px' }}/></td>
               <td>{book.title}</td>
               <td>{book.authors}</td>
-              <td>{book.publisher}</td>
-              <td>{book.publishedDate}</td>
-              <td>{book.pageCount}</td>
-              <td>{book.categories.join(", ")}</td>
-              <td>{book.description}</td>
               <td>{book.rating}</td>
               <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
             </tr>

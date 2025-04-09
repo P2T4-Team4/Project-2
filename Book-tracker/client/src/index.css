@@ -1331,6 +1331,97 @@ form [type='radio'] {
   max-width: 100%;
 }
 
+table {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+table tr, td, th {
+  border: 2px solid gray;
+  border-collapse: collapse;
+  padding: 10px;
+  width: fit-content
+}
+
+thead {
+  text-align: center;
+}
+
+th {
+  background: linear-gradient(
+    180deg,
+    rgb(18, 126, 25) 0%,
+    rgb(33, 75, 39) 15%,
+    rgb(94, 97, 123) 100%
+  );
+}
+
+td {
+  animation: lights 5s 750ms linear infinite;
+}
+
+.center {
+  text-align: center;
+}
+
+tr:hover {
+  background: linear-gradient(
+    180deg,
+    rgb(18, 126, 25) 0%,
+    rgb(33, 75, 39) 15%,
+    rgb(94, 97, 123) 100%
+  );
+}
+
+@keyframes lights {
+  0% {
+    color: hsl(230, 40%, 80%);
+    text-shadow:
+      0 0 1em hsla(320, 100%, 50%, 0.2),
+      0 0 0.125em hsla(320, 100%, 60%, 0.3),
+      -1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+      1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+  }
+  
+  30% { 
+    color: hsl(230, 80%, 90%);
+    text-shadow:
+      0 0 1em hsla(320, 100%, 50%, 0.5),
+      0 0 0.125em hsla(320, 100%, 60%, 0.5),
+      -0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+      0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+  }
+  
+  40% { 
+    color: hsl(230, 100%, 95%);
+    text-shadow:
+      0 0 1em hsla(320, 100%, 50%, 0.5),
+      0 0 0.125em hsla(320, 100%, 90%, 0.5),
+      -0.25em -0.125em 0.125em hsla(40, 100%, 60%, 0.2),
+      0.25em 0.125em 0.125em hsla(200, 100%, 60%, 0.4);
+  }
+  
+  70% {
+    color: hsl(230, 80%, 90%);
+    text-shadow:
+      0 0 1em hsla(320, 100%, 50%, 0.5),
+      0 0 0.125em hsla(320, 100%, 60%, 0.5),
+      0.5em -0.125em 0.25em hsla(40, 100%, 60%, 0.2),
+      -0.5em 0.125em 0.25em hsla(200, 100%, 60%, 0.4);
+  }
+  
+  100% {
+    color: hsl(230, 40%, 80%);
+    text-shadow:
+      0 0 1em hsla(320, 100%, 50%, 0.2),
+      0 0 0.125em hsla(320, 100%, 60%, 0.3),
+      1em -0.125em 0.5em hsla(40, 100%, 60%, 0),
+      -1em 0.125em 0.5em hsla(200, 100%, 60%, 0);
+  }
+  
+}
+
 /* col-sm */
 @media screen and (min-width: 640px) {
   .col-sm-auto {
