@@ -4,8 +4,9 @@ import SearchBar from "../components/SearchBar.js";
 // import { searchBooks } from "../api/booksAPI.js";
 import Book from "../interfaces/Book.js";
 import "../CSS/Recommend.css";
+// import Navbar from "../components/Navbar.js";
 
-const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
+const genres = ["Fiction", "History", "Mystery", "Science Fiction", "Fantasy", "Romance"];
 
 const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API; adjust as needed
 console.log("API_URL in Home.tsx:", API_URL); // Log the API URL to ensure it's being set correctly
@@ -68,8 +69,8 @@ const Home: React.FC = () => {
 
     return (
         <div className="home">
-            <h1>Welcome to Book Tracker!</h1>
-            <SearchBar onSearch={handleSearch} />
+            <h1>Welcome to Book Worm!</h1>
+            {/* <SearchBar onSearch={handleSearch} /> */}
             {searchQuery ? (
                 <div className="search-results">
                     <h2>Search Results</h2>

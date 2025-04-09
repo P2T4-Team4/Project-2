@@ -101,7 +101,7 @@ const WantToRead = () => {
             <th>Thumbnail</th>
             <th>Title</th>
             <th>Authors</th>
-            <th>Rating</th>
+            {/* <th>Rating</th> */}
             <th>Remove</th>
             <th>Actions</th>
           </tr>
@@ -110,7 +110,7 @@ const WantToRead = () => {
               <td><img src={book.thumbnail} alt={book.title} style={{ height: '100px' }} /></td>
               <td>{book.title}</td>
               <td>{book.authors}</td>
-              <td>{book.rating}</td>
+              {/* <td>{book.rating}</td> */}
               <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
               <td><button onClick={() => moveToReadList(book)}>Move to Read List</button></td>
             </tr>

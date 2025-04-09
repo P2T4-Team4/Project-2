@@ -4,7 +4,7 @@ import { UserLogin } from "../interfaces/UserLogin.js";  // Import the UserLogin
 const login = async (userInfo: UserLogin) => {
   try {
     // Send a POST request to '/auth/login' with user login information in JSON format
-    const response = await fetch('http://localhost:3000/auth/login', {  // Update to backend API URL
+    const response = await fetch('http://localhost:3000/api/users/login', {  // Update to backend API URL
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

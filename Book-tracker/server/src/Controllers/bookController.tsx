@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Request, Response } from "express";
 
-const genres = ["Fiction", "Non-Fiction", "Mystery", "Sci-Fi", "Fantasy", "Romance"];
+const genres = ["Fiction", "History", "Mystery", "Science Fiction", "Fantasy", "Romance"];
 
 export async function getBooksForHomepage(_req: Request, res: Response) {
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY; // Your Google Books API key

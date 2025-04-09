@@ -3,6 +3,7 @@ import type { Request, Response } from 'express';
 import { User } from '../../models/index.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { authenticateToken } from '../../middleware/auth.js';
 
 
 const router = express.Router();
@@ -31,6 +32,8 @@ router.post('/register', async (req: Request, res: Response) => {
 
 
 router.post('/login', async (req: Request, res: Response) => {
+  console.log("LOGIN request received!");
+  console.log("req.body:", req.body);
   const { username, password } = req.body;
 
   try {
@@ -47,7 +50,7 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/me', async (req: Request, res: Response) => {
+router.get('/me', authenticateToken, async (req: Request, res: Response) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
 
@@ -63,7 +66,7 @@ router.get('/me', async (req: Request, res: Response) => {
 });
 
 
-router.put('/update', async (req: Request, res: Response) => {
+router.put('/update', authenticateToken, async (req: Request, res: Response) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
   try {
