@@ -59,11 +59,11 @@ export function UserFactory(sequelize: Sequelize): typeof User {
           await user.setPassword(user.password);
         },
         // Before updating a user, hash and set the new password if it has changed
-        beforeUpdate: async (user: User) => {
-          if (user.changed('password')) {
-            await user.setPassword(user.password);
-          }
-        },
+        // beforeUpdate: async (user: User) => {
+        //   if (user.changed('password')) {
+        //     await user.setPassword(user.password);
+        //   }
+        // },
       }
     }
   );

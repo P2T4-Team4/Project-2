@@ -5,11 +5,11 @@ import express from "express";
 import cors from "cors";
 
 import { sequelize } from "./config/connection.js";
-import routes from "./routes/index.js";
+// import routes from "./routes/index.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import { searchBooks } from "./Controllers/SearchController.js";
 import { getBooksForHomepage } from "./Controllers/bookController.js";
-import { authenticateToken } from "./middleware/auth.js";
+// import { authenticateToken } from "./middleware/auth.js";
 import { userRouter } from "./routes/api/user-routes.js";
 
 const app = express();
@@ -30,12 +30,12 @@ app.use("/api/books", bookRoutes);
 app.get("/api/search", searchBooks);             
 app.get("/api/books/home", getBooksForHomepage);
 
-app.use('/api/users', authenticateToken, userRouter)
+app.use('/api/users', userRouter); // User routes for authentication
 
 
-// === Use Additional Routes if needed ===
-app.use(routes); // Only if routes/index.js exists and is needed
-// app.post("/api/register")
+// // === Use Additional Routes if needed ===
+// app.use(routes); // Only if routes/index.js exists and is needed
+// // app.post("/api/register")
 
 
 // === Start Server ===

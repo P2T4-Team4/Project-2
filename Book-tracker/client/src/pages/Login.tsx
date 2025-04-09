@@ -4,6 +4,7 @@ import Auth from '../utils/auth';  // Import the Auth utility for managing authe
 import { login } from "../api/authAPI";  // Import the login function from the API
 import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserLogin
 
+
 const Login = () => {
   // State to manage the login form data
   const [loginData, setLoginData] = useState<UserLogin>({
@@ -30,6 +31,7 @@ const Login = () => {
       const data = await login(loginData);
       // If login is successful, call Auth.login to store the token in localStorage
       Auth.login(data.token);
+      // localStorage.setItem('jwtToken', data.token);  // Store the JWT token in localStorage
       navigate('/');  // Redirect to the home page after successful login
     } catch (err) {
       console.error('Failed to login', err);  // Log any errors that occur during login

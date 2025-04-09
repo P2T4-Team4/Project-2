@@ -5,9 +5,8 @@ interface Book {
     publisher: string;
     publishedDate: string;
     pageCount: number;
-    categories: string[];
+    categories?:string[];
     thumbnail: string;
-    rating: number;
     id: string;
     genre: string;
 }

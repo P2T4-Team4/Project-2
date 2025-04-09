@@ -4,17 +4,6 @@ import { useState, useEffect } from 'react';
 import Book from '../interfaces/Book.js';
 
 
-// interface Book {
-//   id: string;
-//   title: string;
-//   author: string;
-//   rating: number;
-// }
-
-// const booksRead: React.FC = () => {
-//   const [books, setBooks] = useState<Book[]>([]);
-//   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
-// }
 const ReadPage = () => {
 
   const [readBookList, setReadBookList] = useState<Book[]>([]);
@@ -52,7 +41,7 @@ const ReadPage = () => {
               <th>Thumbnail</th>
               <th>Title</th>
               <th>Authors</th>
-              <th>Rating</th>
+              {/* <th>Rating</th> */}
               <th>Remove</th>
             </tr>
             {readBookList.map((book: Book, index: number) => (
@@ -60,7 +49,7 @@ const ReadPage = () => {
               <td><img src={book.thumbnail} alt={book.title} style={{ height: '100px' }}/></td>
               <td>{book.title}</td>
               <td>{book.authors}</td>
-              <td>{book.rating}</td>
+              {/* <td>{book.rating}</td> */}
               <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
             </tr>
             ))}
