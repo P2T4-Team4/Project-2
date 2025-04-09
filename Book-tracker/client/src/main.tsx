@@ -9,6 +9,7 @@ import WantToRead from './pages/WantToRead.tsx';
 import ErrorPage from './pages/Bio.tsx';
 import ReadPage from './pages/ReadPage.tsx';
 import Bio from './pages/Bio.tsx';
+import Register from './pages/register.tsx';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: '/Bio',
         element: <Bio />
+      },
+      {
+        path: '/register',
+        element: <Register />
       }
     ]
   }

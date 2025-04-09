@@ -65,9 +65,18 @@ const WantToRead = () => {
     localStorage.setItem("wantToReadBooks", JSON.stringify(updatedBooks));
     // update the want to read list
     setBookList(updatedBooks);
-    setNoBooksMessage("");
     //update the read list
-    localStorage.setItem("readBooks", JSON.stringify(book));
+    const storedReadBooks = localStorage.getItem("readBooks");
+    const readBooks = storedReadBooks ? JSON.parse(storedReadBooks) : [];
+    // check if the book is already in the read list
+    const isBookInReadList = readBooks.some((b: Book) => b.title === book.title);
+    if (!isBookInReadList) {
+      readBooks.push(book);
+    } else {
+      setNoBooksMessage("The book selected is already in your read list.");
+    }
+    localStorage.setItem("readBooks", JSON.stringify(readBooks));
+    setNoBooksMessage("");
   };
 
   useEffect(() => {
@@ -84,33 +93,23 @@ const WantToRead = () => {
 
   return (
     <div>
-      <h1>Book List for Future Reading</h1>
-      { noBooksMessage ? (<p>{noBooksMessage}</p>) : bookList.length > 0 ? (
+      <h1 className="center">Book List for Future Reading</h1>
+      { noBooksMessage ? (<p className="center">{noBooksMessage}</p>) : bookList.length > 0 ? (
       <table>
         <thead>
           <tr>
             <th>Thumbnail</th>
             <th>Title</th>
             <th>Authors</th>
-            <th>Publisher</th>
-            <th>Published Date</th>
-            <th>Page Count</th>
-            <th>Categories</th>
-            <th>Description</th>
             <th>Rating</th>
             <th>Remove</th>
             <th>Actions</th>
           </tr>
           {bookList.map((book: Book, index: number) => (
             <tr key={index}>
-              <td><img src={book.thumbnail} alt={book.title} /></td>
+              <td><img src={book.thumbnail} alt={book.title} style={{ height: '100px' }} /></td>
               <td>{book.title}</td>
               <td>{book.authors}</td>
-              <td>{book.publisher}</td>
-              <td>{book.publishedDate}</td>
-              <td>{book.pageCount}</td>
-              <td>{book.categories.join(", ")}</td>
-              <td>{book.description}</td>
               <td>{book.rating}</td>
               <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
               <td><button onClick={() => moveToReadList(book)}>Move to Read List</button></td>

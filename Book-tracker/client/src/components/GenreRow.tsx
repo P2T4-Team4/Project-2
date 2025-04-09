@@ -25,6 +25,16 @@ const addWantToRead = (book: Book) => {
   const currentBook = book;
   const storedBooks = localStorage.getItem("wantToReadBooks");
   const wantToReadBooks = storedBooks ? JSON.parse(storedBooks) : [];
+  // check if book is already in readBook local storage
+  const storedReadBooks = localStorage.getItem("readBooks");
+  const readBooks = storedReadBooks ? JSON.parse(storedReadBooks) : [];
+  const bookExistsInRead = readBooks.some((book: Book) => book.id === currentBook.id);
+  if (bookExistsInRead) {
+    // remove the book from readBooks
+    const updatedReadBooks = readBooks.filter((book: Book) => book.id !== currentBook.id);
+    localStorage.setItem("readBooks", JSON.stringify(updatedReadBooks));
+  }
+  // check if book is already in wantToRead local storage
   const bookExists = wantToReadBooks.some((book: Book) => book.id === currentBook.id);
   if (!bookExists) {
     wantToReadBooks.push(currentBook);
@@ -43,6 +53,16 @@ const addReadBooks = (book: Book) => {
   const currentBook = book;
   const storedBooks = localStorage.getItem("readBooks");
   const readBooks = storedBooks ? JSON.parse(storedBooks) : [];
+  // check if book is already in wantToRead local storage
+  const storedWantToReadBooks = localStorage.getItem("wantToReadBooks");
+  const wantToReadBooks = storedWantToReadBooks ? JSON.parse(storedWantToReadBooks) : [];
+  const bookExistsInWantToRead = wantToReadBooks.some((book: Book) => book.id === currentBook.id);
+  if (bookExistsInWantToRead) {
+    // remove the book from wantToReadBooks
+    const updatedWantToReadBooks = wantToReadBooks.filter((book: Book) => book.id !== currentBook.id);
+    localStorage.setItem("wantToReadBooks", JSON.stringify(updatedWantToReadBooks));
+  }
+  // check if book is already in readBooks local storage
   const bookExists = readBooks.some((book: Book) => book.id === currentBook.id);
   if (!bookExists) {
     readBooks.push(currentBook);

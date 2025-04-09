@@ -9,6 +9,8 @@ import routes from "./routes/index.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import { searchBooks } from "./Controllers/SearchController.js";
 import { getBooksForHomepage } from "./Controllers/bookController.js";
+import { authenticateToken } from "./middleware/auth.js";
+import { userRouter } from "./routes/api/user-routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,10 +28,14 @@ app.use(cors({
 // === API Routes ===
 app.use("/api/books", bookRoutes);               
 app.get("/api/search", searchBooks);             
-app.get("/api/books/home", getBooksForHomepage);       
+app.get("/api/books/home", getBooksForHomepage);
+
+app.use('/api/users', authenticateToken, userRouter)
+
 
 // === Use Additional Routes if needed ===
 app.use(routes); // Only if routes/index.js exists and is needed
+// app.post("/api/register")
 
 
 // === Start Server ===

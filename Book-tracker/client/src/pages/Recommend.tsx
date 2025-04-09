@@ -17,15 +17,18 @@ const BookRecommendations: React.FC = () => {
   useEffect(() => {
     const wantToReadBooks = JSON.parse(localStorage.getItem('wantToReadBooks') || '[]');
     const readBooks = JSON.parse(localStorage.getItem('readBooks') || '[]');
-
+    console.log('Want to Read Books:', wantToReadBooks);
+    console.log('Read Books:', readBooks);
     
     const allBooksMap = new Map<string, Book>();
     [...wantToReadBooks, ...readBooks].forEach((book: Book) => {
       allBooksMap.set(book.id, book);
     });
+    console.log('Combined Books:', allBooksMap);
 
     const combinedBooks = Array.from(allBooksMap.values());
     setSavedBooks(combinedBooks);
+    console.log('Saved Books:', combinedBooks);
 
     
     localStorage.setItem('savedBooks', JSON.stringify(combinedBooks));

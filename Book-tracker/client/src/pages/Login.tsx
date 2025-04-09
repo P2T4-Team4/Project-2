@@ -1,5 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-
+import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
 import { login } from "../api/authAPI";  // Import the login function from the API
 import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserLogin
@@ -9,8 +9,9 @@ const Login = () => {
   const [loginData, setLoginData] = useState<UserLogin>({
     username: '',
     password: '',
-    // email: ''
   });
+
+  const navigate = useNavigate();  // Get the navigate function for navigation
 
   // Handle changes in the input fields
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -29,9 +30,15 @@ const Login = () => {
       const data = await login(loginData);
       // If login is successful, call Auth.login to store the token in localStorage
       Auth.login(data.token);
+      navigate('/');  // Redirect to the home page after successful login
     } catch (err) {
       console.error('Failed to login', err);  // Log any errors that occur during login
     }
+  };
+
+  // Handle navigation to the register page
+  const handleRedirectToRegister = () => {
+    navigate('/register');  // Navigate to the register page
   };
 
   return (
@@ -65,8 +72,14 @@ const Login = () => {
           <button className="btn btn-primary" type='submit'>Login</button>
         </div>
       </form>
+
+      {/* Redirect to Register page button */}
+      <div className="form-group">
+        <p>Don't have an account? <button className="btn btn-link" onClick={handleRedirectToRegister}>Register here</button></p>
+      </div>
     </div>
-  )
+  );
 };
 
 export default Login;
+
