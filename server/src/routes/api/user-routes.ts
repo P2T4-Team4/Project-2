@@ -57,10 +57,15 @@ router.get('/getLists', authenticateToken, async (req: Request, res: Response) =
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    const user = await User.findByPk((decoded as any).id);
+    const user = await User.findByPk((decoded as any).id, {
+      include: [
+        { model: User, as: 'wantToReadBooks' },
+        { model: User, as: 'readBooks' }
+      ]
+    }) ;
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    return res.json({ wantToRead: user.wantToRead, readBooks: user.readBooks });
+    return res.json({ wantToReadBooks: user.wantToReadBooks, readBooks: user.readBooks });
   } catch (error: any) {
     return res.status(401).json({ message: 'Invalid token' });
   }
@@ -79,8 +84,28 @@ router.put('/updateLists', authenticateToken, async (req: Request, res: Response
     const user = await User.findByPk(userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    await user.setWantToRead(wantToRead);
-    await user.setReadBooks(readBooks);
+    const findOrCreateBooks = async (books: any[]) => {
+      const bookInstances = [];
+      for (const book of books) {
+        const [bookInstance] = await book.findOrCreate({
+          where: { id: book.id }, 
+          defaults: {
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+            coverImageUrl: book.coverImageUrl,
+            description: book.description,
+          },
+        });
+        bookInstances.push(bookInstance);
+      }
+      return bookInstances;
+    };
+    const wantToReadBooks = await findOrCreateBooks(wantToRead);
+    const readBooksInstances = await findOrCreateBooks(readBooks);
+
+    await user.setWantToReadBooks(wantToReadBooks);
+    await user.setReadBooks(readBooksInstances);
 
     return res.json({ message: 'User updated successfully' });
   } catch (error: any) {

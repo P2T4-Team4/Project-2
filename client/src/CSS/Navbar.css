@@ -15,25 +15,27 @@
   padding-right: 30px;
 }
 
+/* Sharpen the background with a gradient and better shadows */
 .mint-green {
-  background: linear-gradient(135deg, #121212, #0a3619);
+  background: linear-gradient(135deg, #121212, #1db954); /* Gradient background for a sharp effect */
   color: white;
   border-bottom: 2px solid #333;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6); /* Deeper shadow to add more depth */
   border-radius: 8px; /* Soft rounded corners */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
 }
 
+/* Navbar Header Styling */
 h1 {
-  font-family: 'fredokaone', sans-serif;
   font-size: 32px;
   font-weight: bold;
   color: #1db954;
   margin: 0;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Light text shadow to give it more depth */
 }
 
+/* Button Styling */
 .btn {
-  font-family: 'fredokaone', sans-serif;
   background-color: transparent;
   border: none;
   margin: 0 10px;
@@ -44,6 +46,7 @@ h1 {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
+  border-radius: 4px; /* Rounded buttons for a smooth, sharp feel */
 }
 
 .btn a {
@@ -57,6 +60,7 @@ h1 {
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.6);
 }
 
+/* Last button (logout) styling */
 .btn:last-child {
   background-color: #f04e23;
 }
@@ -99,7 +103,7 @@ h1 {
 
   /* Hamburger Icon */
   .hamburger {
-    display: none;
+    display: block;
     cursor: pointer;
     padding: 10px;
     font-size: 28px;
@@ -108,19 +112,6 @@ h1 {
     border: none;
     z-index: 1000;
   }
-
-  @media (max-width: 768px) {
-    .hamburger {
-      display: block;
-      cursor: pointer;
-      padding: 10px;
-      font-size: 28px;
-      background-color: transparent;
-      color: white;
-      border: none;
-      z-index: 1000;
-    }
-    
 
   .hamburger div {
     width: 35px;
@@ -141,25 +132,5 @@ h1 {
 
   .hamburger.active div:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
-  }
-}
-
-.navbar-links {
-  display: grid;
-  grid-template-columns: repeat(3, auto); /* 3 per row */
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
-
-@media (max-width: 768px) {
-  .navbar-links {
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-}
-  .btn {
-    width: 100%;
   }
 }
