@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 //   console.log(`Server is running on port ${PORT}`);
 // });
 const forceDatabaseRefresh = false;
-
+app.use(express.static("../client/dist"));
 
 // === Middleware ===
 app.use(express.json());
