@@ -1,6 +1,6 @@
 // Assuming `Auth` utility is being used to retrieve the token.
 // import Auth from '../utils/auth.js';
-import { UserLogin } from "../interfaces/UserLogin";
+// import { UserLogin } from "../interfaces/UserLogin";
 
 const retrieveUsers = async () => {
   try {

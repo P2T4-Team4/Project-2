@@ -1,7 +1,5 @@
-
-
 import React from "react";
-import BookCard from "./BookCard.js";
+// import BookCard from "./BookCard.js";
 import Book from "../interfaces/Book.js";
 import "../CSS/GenreRow.css"; // or GenreRow.css
 import { useState, useEffect} from "react";
@@ -10,7 +8,8 @@ import { useState, useEffect} from "react";
 type GenreRowProps = {
   genre: string;
   books: Book[];
-};
+  wantToRead: Book[];
+  readBooks: Book[];};
 
 
 const addWantToRead = (book: Book) => {
@@ -74,12 +73,12 @@ const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
   }, []);
 
   const handleWantToRead = (book: Book) => {
-    addWantToRead(book); // updates localStorage
+    addWantToRead(book); 
     setWantToReadListID((prev) => [...prev, book.id]);
     setReadListID((prev) => prev.filter((id) => id !== book.id));
   };
   const handleReadBooks = (book: Book) => {
-    addReadBooks(book); // updates localStorage
+    addReadBooks(book); 
     setReadListID((prev) => [...prev, book.id]); 
     setWantToReadListID((prev) => prev.filter((id) => id !== book.id));
   };
@@ -87,8 +86,8 @@ const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   const openModal = (book: Book) => setSelectedBook(book);
-  const closeModal = () => setSelectedBook(null);
-  
+  // const closeModal = () => setSelectedBook(null);
+  selectedBook
   return (
     <div className="genre-row">
       <h2>{genre}</h2>

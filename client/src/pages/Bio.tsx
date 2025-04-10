@@ -16,14 +16,14 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Ryan Gayle",
-    intro: "",
-    bio: "",
+    intro: "Ryan is from Brooklyn, NYC, and he's currently an SEO Specialist.",
+    bio: "Ryan is a full stack bootcamp student through Columbia University. He enjoys watching sports, working out, and talking on his Knicks based podcast.",
     imageUrl: "", 
   },
   {
     name: "Chris Del Grosso",
     intro: "Hello everyone, my name is Chris and I am from Boston, MA.",
-    bio: "I am a full stack bootcamp student through Columbia University.  enjoy skiing, golfing, and speanding time with friends and family.",
+    bio: "I am a full stack bootcamp student through Columbia University.  He enjoys skiing, golfing, and speanding time with friends and family.",
     imageUrl: "",
   },
 ];
