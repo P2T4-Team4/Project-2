@@ -1,5 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import {sequelize} from "../config/connection.js";
+import { User } from "./user.js";
 
 class Book extends Model {
   public id!: string;
@@ -44,6 +45,21 @@ Book.init(
   }
 );
 
+export function associateBookModels(BookModel: typeof Book, UserModel: typeof User) {
+  // "Want to Read" relationship
+  BookModel.belongsToMany(UserModel, {
+    through: "WantToRead",
+    foreignKey: "bookId",
+    as: "usersWantToRead",
+  });
+
+  // "Read Books" relationship
+  BookModel.belongsToMany(UserModel, {
+    through: "ReadBooks",
+    foreignKey: "bookId",
+    as: "usersReadBooks",
+  });
+}
 
 
 export default Book;

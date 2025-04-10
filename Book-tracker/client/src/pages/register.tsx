@@ -21,6 +21,8 @@ const Register = () => {
       ...registerData,
       [name]: value
     });
+    if (errorMessage) setErrorMessage('');
+    if (successMessage) setSuccessMessage('');
   };
 
   // Handle form submission for registration
@@ -29,9 +31,9 @@ const Register = () => {
     try {
       // Call the register API endpoint with registerData
       const data = await register(registerData);
-      setSuccessMessage('Successfully registered, you are now logged in!');
-      setErrorMessage('');
-      navigate('/login');  // Redirect to the login page after successful registration
+      setSuccessMessage('Successfully registered, please log in!');
+      // setErrorMessage('');
+      // navigate('/login');  // Redirect to the login page after successful registration
     } catch (err) {
       setErrorMessage('Registration failed. Please try again.');
       setSuccessMessage('');

@@ -1,26 +1,18 @@
 import { useState, useEffect } from "react";
 import GenreRow from "../components/GenreRow.js";
-import SearchBar from "../components/SearchBar.js";
-// import { searchBooks } from "../api/booksAPI.js";
 import Book from "../interfaces/Book.js";
 import "../CSS/Recommend.css";
-// import Navbar from "../components/Navbar.js";
+import { getBookLists, updateBookList } from "../api/booksAPI.js";
+import auth from "../utils/auth.js";
 
 const genres = ["Fiction", "History", "Mystery", "Science Fiction", "Fantasy", "Romance"];
 
 const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API; adjust as needed
-console.log("API_URL in Home.tsx:", API_URL); // Log the API URL to ensure it's being set correctly
-
-// const Auth = {
-//   getToken: () => {localStorage.getItem("token")},
-// }
 
 const Home: React.FC = () => {
-    const [books, setBooks] = useState<Record<string, Book[]>>({}); // Store books per genre
-    const [searchResults, setSearchResults] = useState<Book[]>([]); // Store search results
-    const [searchQuery, setSearchQuery] = useState("");
-
-    // Fetch books for each genre on page load
+    const [books, setBooks] = useState<Record<string, Book[]>>({}); // 
+    const [wantToRead, setWantToRead] = useState<Book[]>([]);
+    const [readBooks, setReadBooks] = useState<Book[]>([]);
     useEffect(() => {
         const fetchBooks = async () => {
           try {
@@ -36,47 +28,47 @@ const Home: React.FC = () => {
         };
         fetchBooks();
       }, []);
-      
 
-    // // Handle search
-    const handleSearch = async (query: string) => {
-        setSearchQuery(query);
-      
-        if (query.trim()) {
+      useEffect(() => {
+        const fetchLists = async () => {
+          const token = auth.getToken();
+          if (!token) return;
+    
           try {
-            const res = await fetch(`${API_URL}/search?q=${query}
-                `); 
-      
-            if (!res.ok) {
-              const errorText = await res.text();
-              console.error(`Server error: ${res.status}`, errorText);
-              return;
-            }
-      
-            const data = await res.json();
-            console.log("Search results:", data);
-            setSearchResults(data);
+            const lists = await getBookLists(token);
+            setWantToRead(lists.wantToRead || []);
+            setReadBooks(lists.readBooks || []);
+            localStorage.setItem("wantToRead", JSON.stringify(lists.wantToRead || []));
+            localStorage.setItem("readBooks", JSON.stringify(lists.readBooks || []));
           } catch (err) {
-            console.error("Fetch error:", err);
+            console.error("Error fetching user book lists:", err);
           }
-        } else {
-          setSearchResults([]);
-        }
-      };
-      
-      
+        };
+    
+        fetchLists();
+      }, []);
 
+      // useEffect(() => {
+      //   const syncToBackend = async () => {
+      //     const token = auth.getToken();
+      //     if (!token) return;
+    
+      //     try {
+      //       await updateBookList(token, {
+      //         wantToRead,
+      //         readBooks,
+      //       });
+      //     } catch (err) {
+      //       console.error("Error syncing lists to backend:", err);
+      //     }
+      //   };
+    
+      //   syncToBackend();
+      // }, [wantToRead, readBooks]);
+    
 
-    return (
-        <div className="home">
-            <h1>Welcome to Book Worm!</h1>
-            {/* <SearchBar onSearch={handleSearch} /> */}
-            {searchQuery ? (
-                <div className="search-results">
-                    <h2>Search Results</h2>
-                    <GenreRow genre="Search Results" books={searchResults} />
-                </div>
-            ) : (
+          return (
+
                 <>{Object.keys(books).length === 0 ? (
                   <p>Loading books...</p>
                 ) : (
@@ -89,83 +81,7 @@ const Home: React.FC = () => {
                 )}
                 </>
             )}
-        </div>
-    );
-};
-
+        
 
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Old code; kept here in needed for login later
-
-// const Home = () => {
-
-//     const [users, setUsers] = useState<UserData[]>([]);
-//     const [error, setError] = useState(false);
-//     const [loginCheck, setLoginCheck] = useState(false);
-
-//     useEffect(() => {
-//         if (loginCheck) {
-//             fetchUsers();
-//         }
-//     }, [loginCheck]);
-
-//     useLayoutEffect(() => {
-//         checkLogin();
-//     }, []);
-
-//     const checkLogin = () => {
-//         if (auth.loggedIn()) {
-//             setLoginCheck(true);
-//         }
-//     };
-
-//     const fetchUsers = async () => {
-//         try {
-//             const data = await retrieveUsers();
-//             setUsers(data)
-//         } catch (err) {
-//             console.error('Failed to retrieve tickets:', err);
-//             setError(true);
-//         }
-//     }
-
-//     if (error) {
-//         return <ErrorPage />;
-//     }
-
-//     return (
-//         <>
-//             {
-//                 !loginCheck ? (
-//                     <div className='login-notice'>
-//                         <h1>
-//                             Login to see your Books!
-//                         </h1>
-//                     </div>
-//                 ) : (
-//                     <UserList users={users} />
-//                 )}
-//         </>
-//     );
-// };
-
-// export default Home;

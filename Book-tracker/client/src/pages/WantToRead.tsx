@@ -1,51 +1,24 @@
 import { useState, useEffect } from "react";
 import Book from "../interfaces/Book.js";
+import { updateBookList } from "../api/booksAPI.js";
+
 
 const WantToRead = () => {
   
   const [ bookList, setBookList ] = useState<Book[]>([]);
   const [ noBooksMessage, setNoBooksMessage ] = useState<string>("");
-  // const [ searchInput, setSearchInput ] = useState<string>("");
 
-  // const searchForBooks = async (event: FormEvent, searchInput: string) => {
-  //   event.preventDefault();
-  //   try {
-  //     // search for books using the Google Books API
-  //     const book = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`);
-  //     const data = await book.json();
-  //     // list books that match the search input
-  //     const books = data.items.map((item: any) => ({
-  //       title: item.volumeInfo.title,
-  //       authors: item.volumeInfo.authors || [],
-  //       thumbnail: item.volumeInfo.imageLinks?.thumbnail || "",
-  //       description: item.volumeInfo.description || "",
-  //       publisher: item.volumeInfo.publisher || "",
-  //       publishedDate: item.volumeInfo.publishedDate || "",
-  //       pageCount: item.volumeInfo.pageCount || 0,
-  //       categories: item.volumeInfo.categories || [],
-  //     }));
-  //     // allow the user to add the book(s) they want to read to their list
-  //     setBookList(books);
-  //     setNoBooksMessage("");
-  //   } catch (error) {
-  //     console.error("Error fetching books:", error);
-  //     setNoBooksMessage("No books found. Please try again.");
-  //   }
-  // };
+  const updateServer = async (updatedBooks: Book[]) => {
+    try {
+      const token = localStorage.getItem("jwtToken");
+      if (token) {
+        await updateBookList(token, updatedBooks);
+      }
+    } catch (error) {
+      console.error("Error updating server:", error);
+    }
+  }
 
-  // const addToBookList = (book: Book) => {
-  //   const storedBooks = localStorage.getItem("wantToReadBooks");
-  //   const books = storedBooks ? JSON.parse(storedBooks) : [];
-  //   // check if the book is already in the list
-  //   const isBookInList = books.some((b: Book) => b.title === book.title);
-  //   if (!isBookInList) {
-  //     books.push(book);
-  //     localStorage.setItem("wantToReadBooks", JSON.stringify(books));
-  //     setNoBooksMessage("");
-  //   } else {
-  //     setNoBooksMessage("The book selected is already in your list.");
-  //   }
-  // };
 
   const removeFromBookList = (book: Book) => {
     const storedBooks = localStorage.getItem("wantToReadBooks");
@@ -55,6 +28,7 @@ const WantToRead = () => {
     localStorage.setItem("wantToReadBooks", JSON.stringify(updatedBooks));
     setBookList(updatedBooks);
     setNoBooksMessage("");
+    updateServer(updatedBooks);
   }
 
   const moveToReadList = (book: Book) => {
@@ -77,6 +51,7 @@ const WantToRead = () => {
     }
     localStorage.setItem("readBooks", JSON.stringify(readBooks));
     setNoBooksMessage("");
+    updateServer(updatedBooks);
   };
 
   useEffect(() => {
@@ -95,32 +70,20 @@ const WantToRead = () => {
     <div>
       <h1 className="center">Book List for Future Reading</h1>
       { noBooksMessage ? (<p className="center">{noBooksMessage}</p>) : bookList.length > 0 ? (
-      <table>
-        <thead>
-          <tr>
-            <th>Thumbnail</th>
-            <th>Title</th>
-            <th>Authors</th>
-            {/* <th>Rating</th> */}
-            <th>Remove</th>
-            <th>Actions</th>
-          </tr>
-          {bookList.map((book: Book, index: number) => (
-            <tr key={index}>
-              <td><img src={book.thumbnail} alt={book.title} style={{ height: '100px' }} /></td>
-              <td>{book.title}</td>
-              <td>{book.authors}</td>
-              {/* <td>{book.rating}</td> */}
-              <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
-              <td><button onClick={() => moveToReadList(book)}>Move to Read List</button></td>
-            </tr>
-          ))}
-        </thead>
-      </table>
-      ) : null }
+      <div className="book-list">
+      {bookList.map((book) => (
+        <div key={book.id} className="book-card">
+          <img src={book.thumbnail} alt={book.title} className="book-thumbnail" />
+          <h2 className="book-title">{book.title}</h2>
+          <p className="book-authors">{book.authors}</p>
+          <button onClick={() => removeFromBookList(book)}>Remove</button>
+          <button onClick={() => moveToReadList(book)}>Move to Read List</button>
+        </div>
+      ))}
+    </div>
+    ) : null }
     </div>
   );
-
 };
 
 export default WantToRead;

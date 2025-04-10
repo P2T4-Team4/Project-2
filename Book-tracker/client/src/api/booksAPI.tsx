@@ -38,3 +38,30 @@ export const fetchBooksByGenre = async (genre: string) => {
             return [];
         }
     };
+
+export const updateBookList = async (token: string, updatedbooks: any[]) => {
+    try {
+        const response = await axios.put(`${API_URL}/books/update`, { updatedbooks }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error updating book list:", error);
+        throw error;
+    }
+}
+
+
+export const getBookLists = async (token: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/books/getLists`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching book lists', error);
+    throw error;
+  }
+};

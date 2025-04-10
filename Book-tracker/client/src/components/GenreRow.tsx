@@ -4,23 +4,14 @@ import React from "react";
 import BookCard from "./BookCard.js";
 import Book from "../interfaces/Book.js";
 import "../CSS/GenreRow.css"; // or GenreRow.css
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
-// type Book = {
-//   id: string;
-//   title: string;
-//   author: string;
-//   rating: number;
-//   coverImageUrl: string;
-// };
 
 type GenreRowProps = {
   genre: string;
   books: Book[];
 };
 
-// // const [alreadyWantToReadMessage, setAlreadyWantToReadMessage] = React.useState<string>('');
-// // const [alreadyReadBooksMessage, setAlreadyReadBooksMessage] = React.useState<string>('');
 
 const addWantToRead = (book: Book) => {
   // Want to grab the book id and add it to the want to read list
@@ -42,12 +33,7 @@ const addWantToRead = (book: Book) => {
     wantToReadBooks.push(currentBook);
     localStorage.setItem("wantToReadBooks", JSON.stringify(wantToReadBooks));
   }
-  // } else {
-  //   // setAlreadyWantToReadMessage("Already in Want to Read List");
-  //   setTimeout(() => {
-  //     // setAlreadyWantToReadMessage("");
-  //   }, 2000);
-  // }
+  
 };
 
 const addReadBooks = (book: Book) => {
@@ -70,77 +56,39 @@ const addReadBooks = (book: Book) => {
     readBooks.push(currentBook);
     localStorage.setItem("readBooks", JSON.stringify(readBooks));
   }
-  // } else {
-  //   setAlreadyReadBooksMessage("Already in Read Book List");
-  //   setTimeout(() => {
-  //     setAlreadyReadBooksMessage("");
-  //   }, 2000);
-  // }
+  
 };
 
-// const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
-//     return (
-//       <div className="genre-row mb-10 px-4">
-//         <h2 className="text-2xl font-bold capitalize mb-4">{genre}</h2>
-//         <div className="flex overflow-x-auto space-x-4 scrollbar-hide pb-4">
-//           {books.map((book) => (
-//             <div key={book.id} className="flex-shrink-0 w-40">
-//               <div>
-//                 {/* Book cover image */}
-//                 {book.thumbnail ? (
-//                   <img
-//                     src={book.thumbnail}
-//                     alt={book.title}
-//                     className="w-full h-56 object-cover rounded-md shadow-md hover:scale-105 transition-transform duration-200"
-//                   />
-//                 ) : (
-//                   <div className="w-full h-56 bg-gray-300 rounded-md flex items-center justify-center text-gray-600">
-//                     No Image
-//                   </div>
-//                 )}
-//                 <BookCard book={book} />
-//               </div>
-//               <p className="text-lg text-center mt-2">{book.title}</p>
-//               <p className="text-sm text-center mt-1">Author: {book.authors}</p>
-//               {/* <p className="text-sm text-center">Rating: {book.rating}</p> */}
-//               <button onClick={() => addWantToRead(book)}>Want To Read</button>
-//               <button onClick={() => addReadBooks(book)}>Books Read</button>
-//               {/* {alreadyWantToReadMessage ? (<p>{alreadyWantToReadMessage}</p>) : null}
-//               {alreadyReadBooksMessage ? (<p>{alreadyReadBooksMessage}</p>) : null} */}
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     );
-//   };
-  
 
-
-
-// export default GenreRow;
-
-// import React from "react";
-// import Book from "../interfaces/Book.js";
-// import "../CSS/Recommend.css"; // or GenreRow.css
-
-// type GenreRowProps = {
-//   genre: string;
-//   books: Book[];
-// };
-
-// const addWantToRead = (book: Book) => {
-//   // same logic...
-// };
-
-// const addReadBooks = (book: Book) => {
-//   // same logic...
-// };
 
 const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
+
+  const [readListID, setReadListID] = useState<string[]>([]);
+  const [wantToReadListID, setWantToReadListID] = useState<string[]>([]);
+
+  useEffect(() => {
+    const storedReadListID = localStorage.getItem("readBooks");
+    const storedWantToReadListID = localStorage.getItem("wantToReadBooks");
+    setReadListID(storedReadListID ? JSON.parse(storedReadListID).map((book: Book) => book.id) : []);
+    setWantToReadListID(storedWantToReadListID ? JSON.parse(storedWantToReadListID).map((book: Book) => book.id) : []);
+  }, []);
+
+  const handleWantToRead = (book: Book) => {
+    addWantToRead(book); // updates localStorage
+    setWantToReadListID((prev) => [...prev, book.id]);
+    setReadListID((prev) => prev.filter((id) => id !== book.id));
+  };
+  const handleReadBooks = (book: Book) => {
+    addReadBooks(book); // updates localStorage
+    setReadListID((prev) => [...prev, book.id]); 
+    setWantToReadListID((prev) => prev.filter((id) => id !== book.id));
+  };
+
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   const openModal = (book: Book) => setSelectedBook(book);
   const closeModal = () => setSelectedBook(null);
+  
   return (
     <div className="genre-row">
       <h2>{genre}</h2>
@@ -154,8 +102,22 @@ const GenreRow: React.FC<GenreRowProps> = ({ genre, books }) => {
             )}
             <p className="book-card-title">{book.title}</p>
             <p className="book-card-author">{book.authors}</p>
-            <button onClick={() => addWantToRead(book)}>Want To Read</button>
-            <button onClick={() => addReadBooks(book)}>Mark as Read</button>
+            <button className={wantToReadListID.includes(book.id) ? 'button added' : 'button'}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleWantToRead(book);
+              }} disabled={readListID.includes(book.id)}
+            >
+              {wantToReadListID.includes(book.id) ? 'In List' : 'Want To Read'}
+            </button>
+            <button className={readListID.includes(book.id) ? 'button added' : 'button'}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleReadBooks(book);
+              }} disabled={wantToReadListID.includes(book.id)}
+              >
+              {readListID.includes(book.id) ? 'In List' : 'Mark as Read'}
+            </button>
           </div>
         ))}
       </div>

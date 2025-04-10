@@ -7,6 +7,8 @@ import SearchBar from './SearchBar.js';
 const Navbar = () => {
   // State to track the login status
   const [loginCheck, setLoginCheck] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
+  
 
 const [searchQuery, setSearchQuery] = useState('');
 const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -29,17 +31,37 @@ const isLoginPage = window.location.pathname === '/login';  // Check if the curr
   useEffect(() => {
     checkLogin();  // Call checkLogin() function to update loginCheck state
   }, [loginCheck]);  // Dependency array ensures useEffect runs when loginCheck changes
+  const toggleMenu = () => {
+    setMenuActive(!menuActive);  // Toggle the menuActive state
+  };
 
   return (
     <div className="display-flex justify-space-between align-center py-2 px-5 mint-green">
-      <h1>Book Worm 🪱</h1>
+      <h1>Book Worm 📖🐛</h1>
 
       {/* Conditionally render the search bar if not on the login page */}
-      {!isLoginPage && (
+      {!isLoginPage && auth.loggedIn() && (
         <div className="search-bar-container">
           <SearchBar onSearch={handleSearch} />
         </div>
       )}
+
+      <button
+        className={`hamburger ${menuActive ? 'active' : ''}`}
+        onClick={toggleMenu}>
+          <div></div>
+        <div></div>
+        <div></div>
+      </button>
+
+      {/* Links for Navbar */}
+      <div className={`navbar-links ${menuActive ? 'active' : ''}`}>
+        {/* Only show the login button if not on the login page */}
+        {!isLoginPage && !auth.loggedIn() && (
+          <button className="btn" type="button">
+            <Link to="/login">Login</Link>
+          </button>
+        )}
 
       <div>
         {/* Only show the login button if not on the login page */}
@@ -52,30 +74,33 @@ const isLoginPage = window.location.pathname === '/login';  // Check if the curr
         {/* Conditionally render the navigation buttons based on login status */}
         {!isLoginPage && auth.loggedIn() && (
           <>
+          <div className="navbar-links">
             <button className="btn" type="button">
               <Link to="/">Home🏡</Link>
             </button>
             <button className="btn" type="button">
-              <Link to="/ReadPage">Books Read✔️</Link>
+              <Link to="/ReadPage">Books Read✅</Link>
             </button>
             <button className="btn" type="button">
-              <Link to="/WantToRead">Want to Read⭕</Link>
+              <Link to="/WantToRead">Want to Read📌</Link>
             </button>
             <button className="btn" type="button">
-              <Link to="/Recommended">Recommended💡</Link>
+              <Link to="/Recommended">Recommended👌</Link>
             </button>
             <button className="btn" type="button">
-              <Link to="/Bio">Bio📝</Link>
+              <Link to="/Bio">Bioℹ️</Link>
             </button>
-            {/* Logout button */}
             <button className="btn" type="button" onClick={() => auth.logout()}>
               Logout
             </button>
+          </div>
           </>
         )}
       </div>
         </div>
-      )};
-  
+      </div>
+
+  );
+};
 
 export default Navbar;
