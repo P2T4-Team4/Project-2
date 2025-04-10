@@ -44,7 +44,7 @@ const SearchResultsPage = () => {
       ) : searchResults.length === 0 ? (
         <p>No results found.</p>
       ) : (
-        <GenreRow genre="Search Results" books={searchResults} />
+        <GenreRow genre="Search Results" books={searchResults} wantToRead={[]} readBooks={[]} />
       )}
     </div>
   );
