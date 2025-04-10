@@ -1,5 +1,6 @@
-import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
+import { DataTypes, Sequelize, Model, Optional, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, Association } from 'sequelize';
 import bcrypt from 'bcrypt';
+import Book from './book';  // Import the Book model
 
 // Define the attributes for the User model
 interface UserAttributes {
@@ -13,12 +14,25 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 // Define the User class extending Sequelize's Model
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+  [x: string]: any;
   public id!: number;
   public username!: string;
   public password!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public addWantToRead!: BelongsToManyAddAssociationMixin<Book, number>;
+  public getWantToRead!: BelongsToManyGetAssociationsMixin<Book>;
+
+
+  public addReadBooks!: BelongsToManyAddAssociationMixin<Book, number>;
+  public getReadBooks!: BelongsToManyGetAssociationsMixin<Book>;
+
+  public static override associations: {
+    wantToRead: Association<User, Book>;
+    readBooks: Association<User, Book>;
+  };
 
   // Method to hash and set the password for the user
   public async setPassword(password: string) {
@@ -54,19 +68,30 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       tableName: 'user',  // Name of the table in PostgreSQL
       sequelize,            // The Sequelize instance that connects to PostgreSQL
       hooks: {
-        // Before creating a new user, hash and set the password
+        
         beforeCreate: async (user: User) => {
           await user.setPassword(user.password);
         },
-        // Before updating a user, hash and set the new password if it has changed
-        // beforeUpdate: async (user: User) => {
-        //   if (user.changed('password')) {
-        //     await user.setPassword(user.password);
-        //   }
-        // },
+        
       }
     }
   );
 
   return User;  // Return the initialized User model
+}
+
+export function associateUserModels(UserModel: typeof User, BookModel: typeof Book) {
+  // Want to Read association
+  UserModel.belongsToMany(BookModel, {
+    through: 'WantToRead',
+    as: 'wantToReadBooks',
+    foreignKey: 'userId',
+  });
+
+  // Read Books association
+  UserModel.belongsToMany(BookModel, {
+    through: 'ReadBooks',
+    as: 'readBooks',
+    foreignKey: 'userId',
+  });
 }

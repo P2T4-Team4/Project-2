@@ -42,20 +42,7 @@ const BookRecommendations: React.FC = () => {
   const fetchRecommendations = async (books: Book[]) => {
     setLoading(true);
 
-    // try {
-    //   const searchQuery = savedBooks
-    //     .slice(0, 3) // 
-    //     .map((book) => book.title)
-    //     .join('|'); 
-
-    //   // Fetch recommendations from Google Books API
-    //   console.log('Search query:', searchQuery);
-    //   console.log('API URL:', API_URL);
-    //   console.log('Google Books API:', GoogleBooksAPI);
-    //   console.log('Full URL:', `${GoogleBooksAPI}${searchQuery}&key=${API_URL}`);
-    //   console.log(`${GoogleBooksAPI}${searchQuery}&key=${API_URL}`);
-      
-    //   const response = await axios.get(`${GoogleBooksAPI}${searchQuery}&key=${API_URL}`);
+    
       
     try {
       const genres = new Set<string>();
@@ -82,17 +69,7 @@ const BookRecommendations: React.FC = () => {
         const response = await axios.get(apiURL);
 
 
-      // if (response.data.items) {
-      //   const recommended: Book[] = response.data.items.map((book: any) => ({
-      //     id: book.id,
-      //     title: book.volumeInfo.title,
-      //     authors: book.volumeInfo.authors || [],
-      //     thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
-      //     rating: book.volumeInfo.averageRating ?? 0,
-      //   }));
-
-      //   setRecommendedBooks(recommended);
-      // }
+      
 
       if (response.data.items) {
         const recommended: Book[] = response.data.items.map((book: any) => {
@@ -122,41 +99,18 @@ const BookRecommendations: React.FC = () => {
 
   };
 
-  // return (
-  //   <div className="recommendations">
-      {/* <h1>Saved Books</h1>
-      <div>
-        {savedBooks.map((book) => (
-          <div key={book.id} className="book-card">
-            <img src={book.thumbnail} alt={book.title} />
-            <h2>{book.title}</h2>
-            <p>{book.authors}</p>
-            <p>Rating: {book.rating}</p>
-          </div>
-        ))} */}
-      {/* </div>
-      <h1 className="title">Recommended Books for You📚</h1>
-
-      {loading && <p className="loading">Loading recommendations...</p>}
-
-      <div className="book-list">
-        {recommendedBooks.map((book) => (
-          <div key={book.id} className="book-card">
-            <img src={book.thumbnail} alt={book.title} className="book-thumbnail" />
-            <h2 className="book-title">{book.title}</h2>
-            <p className="book-authors">{book.authors}</p>
-            <p className="book-rating">Rating: {book.rating}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}; */
+  
 return (
   <div className="recommendations">
     <h1 className="title">Recommended Books for You 📚</h1>
 
     {loading && <p className="loading">Loading recommendations...</p>}
+
+    {recommendedBooks.length === 0 && !loading && (
+        <p className="no-recommendations-message">
+          Add books to your want-to-read page to get recommendations.
+        </p>
+      )}
 
     <div className="book-list">
       {recommendedBooks.map((book) => (
@@ -171,6 +125,6 @@ return (
   </div>
 );
 };
-}
+
 
 export default BookRecommendations;

@@ -1,6 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import { User } from '../../models/index.js';
+// import { Book } from '../../models/index.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { authenticateToken } from '../../middleware/auth.js';
@@ -50,7 +51,7 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/me', authenticateToken, async (req: Request, res: Response) => {
+router.get('/getLists', authenticateToken, async (req: Request, res: Response) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
 
@@ -59,30 +60,34 @@ router.get('/me', authenticateToken, async (req: Request, res: Response) => {
     const user = await User.findByPk((decoded as any).id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    return res.json({ id: user.id, username: user.username });
+    return res.json({ wantToRead: user.wantToRead, readBooks: user.readBooks });
   } catch (error: any) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 });
 
 
-router.put('/update', authenticateToken, async (req: Request, res: Response) => {
+router.put('/updateLists', authenticateToken, async (req: Request, res: Response) => {
+  const { wantToRead, readBooks} = req.body;
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     const userId = (decoded as any).id;
-    if(!userId) return res.status(401).json({ message: 'Invalid token' });
-    const { username, password } = req.body;
-    if (username) userId.username = username;
-    if (password) {await userId.setPassword(password);}
+    if (!userId) return res.status(401).json({ message: 'Invalid token' });
 
-    await userId.save();
+    const user = await User.findByPk(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    await user.setWantToRead(wantToRead);
+    await user.setReadBooks(readBooks);
+
     return res.json({ message: 'User updated successfully' });
   } catch (error: any) {
     return res.status(401).json({ message: 'Invalid token' });
   }
-});
-
-
-export { router as userRouter };
+})
+  
+  
+  export { router as userRouter };
+ 

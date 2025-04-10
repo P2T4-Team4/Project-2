@@ -39,10 +39,7 @@ ReadingList.init(
   }
 );
 
-// User.hasMany(ReadingList, { foreignKey: "userId" });
-// Book.hasMany(ReadingList, { foreignKey: "bookId" });
-// ReadingList.belongsTo(User, { foreignKey: "userId" });
-// ReadingList.belongsTo(Book, { foreignKey: "bookId" });
+
 
 
 export default ReadingList;

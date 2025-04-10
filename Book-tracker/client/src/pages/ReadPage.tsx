@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 // import { fetchFinishedBooks } from '../api/booksAPI';
 // import BookList from '../components/BookList';
 import Book from '../interfaces/Book.js';
+import '../CSS/Recommend.css';
 
 
 const ReadPage = () => {
@@ -35,26 +36,17 @@ const ReadPage = () => {
     <div>
       <h1 className='center'>Books Read List</h1>
       {noReadBooksMessage ? (<p className='center'>{noReadBooksMessage}</p>) : readBookList.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Thumbnail</th>
-              <th>Title</th>
-              <th>Authors</th>
-              {/* <th>Rating</th> */}
-              <th>Remove</th>
-            </tr>
-            {readBookList.map((book: Book, index: number) => (
-              <tr key={index}>
-              <td><img src={book.thumbnail} alt={book.title} style={{ height: '100px' }}/></td>
-              <td>{book.title}</td>
-              <td>{book.authors}</td>
-              {/* <td>{book.rating}</td> */}
-              <td><button onClick={() => removeFromBookList(book)}>Remove</button></td>
-            </tr>
-            ))}
-          </thead>
-        </table>
+        <div className="book-list">
+        {readBookList.map((book) => (
+          <div key={book.id} className="book-card">
+            <img src={book.thumbnail} alt={book.title} className="book-thumbnail" />
+            <h2 className="book-title">{book.title}</h2>
+            <p className="book-authors">{book.authors}</p>
+            <button onClick={() => removeFromBookList(book)}>Remove</button>
+            {/* <p className="book-rating">Rating: {book.rating}</p> */}
+          </div>
+        ))}
+      </div>
       ) : null }
       </div>
   );

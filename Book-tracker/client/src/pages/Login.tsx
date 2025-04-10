@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";  // Import useNavigate for navig
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
 import { login } from "../api/authAPI";  // Import the login function from the API
 import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserLogin
+import { getBookLists } from "../api/booksAPI";  // Import the function to get the books list
 
 
 const Login = () => {
@@ -11,6 +12,8 @@ const Login = () => {
     username: '',
     password: '',
   });
+
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();  // Get the navigate function for navigation
 
@@ -29,11 +32,13 @@ const Login = () => {
     try {
       // Call the login API endpoint with loginData
       const data = await login(loginData);
-      // If login is successful, call Auth.login to store the token in localStorage
-      Auth.login(data.token);
-      // localStorage.setItem('jwtToken', data.token);  // Store the JWT token in localStorage
+      Auth.login(data.token);  
+      const bookLists = await getBookLists(data.token);
+      localStorage.setItem('wantToRead', JSON.stringify(bookLists.wantToRead))  
+      localStorage.setItem('readBooks', JSON.stringify(bookLists.readBooks))
       navigate('/');  // Redirect to the home page after successful login
     } catch (err) {
+      setError('Invalid username or password');  // Set error message if login fails
       console.error('Failed to login', err);  // Log any errors that occur during login
     }
   };
@@ -73,6 +78,7 @@ const Login = () => {
         <div className="form-group">
           <button className="btn btn-primary" type='submit'>Login</button>
         </div>
+        {error && <div className="error-message">{error}</div>}
       </form>
 
       {/* Redirect to Register page button */}

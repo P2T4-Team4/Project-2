@@ -11,16 +11,7 @@ ReadingList.belongsTo(User, { foreignKey: "userId" });
 ReadingList.belongsTo(Book, { foreignKey: "bookId" });
 
 
-// export { User };
 
-// const syncDatabase = async () => {
-//     try {
-//         await sequelize.sync({ force: true });
-//         console.log('Database & tables created!');
-//     } catch (error) {
-//         console.error('Error creating database & tables:', error);
-//     }
-// };
 
 export { sequelize, User, ReadingList, Book };
 
