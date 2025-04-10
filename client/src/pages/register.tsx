@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 // import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
-// import { register } from "../api/authAPI";  // Import the register function from the API
+import { register } from "../api/authAPI";  // Import the register function from the API
 import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserRegister
 
 const Register = () => {
@@ -30,7 +30,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Call the register API endpoint with registerData
-      // const data = await register(registerData);
+      await register(registerData);
       setSuccessMessage('Successfully registered, please log in!');
       // setErrorMessage('');
       // navigate('/login');  // Redirect to the login page after successful registration
