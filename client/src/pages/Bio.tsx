@@ -12,7 +12,7 @@ const teamMembers: TeamMember[] = [
     name: "Doyle Martin",
     intro: "Doyle is from Reno, Nevada, and he currently lives in Montreal, Canada.",
     bio: "I am a full stack bootcamp student through Columbia University. I enjoy traveling, reading, and working out.",
-    imageUrl: "",
+    imageUrl: "../assets/images/doyle.jpg",
   },
   {
     name: "Ryan Gayle",
