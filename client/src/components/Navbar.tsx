@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../utils/auth.js';
 import '../CSS/Navbar.css';
 import SearchBar from './SearchBar.js';
@@ -7,32 +7,32 @@ import SearchBar from './SearchBar.js';
 const Navbar = () => {
   // State to track the login status
   const [loginCheck, setLoginCheck] = useState(false);
-  const [menuActive, setMenuActive] = useState(false);
-  
+  const [menuActive, setMenuActive] = useState(false); // State to handle menu toggle
+  const navigate = useNavigate();
 
-const [searchQuery, setSearchQuery] = useState('');
-const [searchResults, setSearchResults] = useState<any[]>([]);
+  const isLoginPage = window.location.pathname === '/login'; // Check if the current page is the login page
 
-const navigate = useNavigate();
-
-const isLoginPage = window.location.pathname === '/login';  // Check if the current page is the login page
   // Function to check if the user is logged in using auth.loggedIn() method
   const checkLogin = () => {
     if (auth.loggedIn()) {
-      setLoginCheck(true);  // Set loginCheck to true if user is logged in
+      setLoginCheck(true); // Set loginCheck to true if user is logged in
     }
   };
+
   const handleSearch = (query: string) => {
     if (query) {
-      navigate(`/search?q=${query}`); 
+      navigate(`/search?q=${query}`);
     }
   };
+
   // useEffect hook to run checkLogin() on component mount and when loginCheck state changes
   useEffect(() => {
-    checkLogin();  // Call checkLogin() function to update loginCheck state
-  }, [loginCheck]);  // Dependency array ensures useEffect runs when loginCheck changes
+    checkLogin(); // Call checkLogin() function to update loginCheck state
+  }, [loginCheck]); // Dependency array ensures useEffect runs when loginCheck changes
+
+  // Function to toggle the mobile menu
   const toggleMenu = () => {
-    setMenuActive(!menuActive);  // Toggle the menuActive state
+    setMenuActive(!menuActive);
   };
 
   return (
@@ -46,10 +46,12 @@ const isLoginPage = window.location.pathname === '/login';  // Check if the curr
         </div>
       )}
 
+      {/* Hamburger Icon for mobile */}
       <button
         className={`hamburger ${menuActive ? 'active' : ''}`}
-        onClick={toggleMenu}>
-          <div></div>
+        onClick={toggleMenu}
+      >
+        <div></div>
         <div></div>
         <div></div>
       </button>
@@ -58,48 +60,38 @@ const isLoginPage = window.location.pathname === '/login';  // Check if the curr
       <div className={`navbar-links ${menuActive ? 'active' : ''}`}>
         {/* Only show the login button if not on the login page */}
         {!isLoginPage && !auth.loggedIn() && (
-          <button className="btn" type="button">
-            <Link to="/login">Login</Link>
-          </button>
-        )}
-
-      <div>
-        {/* Only show the login button if not on the login page */}
-        {!isLoginPage && !auth.loggedIn() && (
-          <button className="btn" type="button">
-            <Link to="/login">Login</Link>
-          </button>
+  <button className="btn-login" type="button">
+    <Link to="/login">Login</Link>
+  </button>
         )}
 
         {/* Conditionally render the navigation buttons based on login status */}
         {!isLoginPage && auth.loggedIn() && (
           <>
-          <div className="navbar-links">
             <button className="btn" type="button">
-              <Link to="/">Home🏡</Link>
+              <Link to="/">Home🏠︎</Link>
             </button>
             <button className="btn" type="button">
-              <Link to="/ReadPage">Books Read✅</Link>
-            </button>
-            <button className="btn" type="button">
-              <Link to="/WantToRead">Want to Read📌</Link>
-            </button>
-            <button className="btn" type="button">
-              <Link to="/Recommended">Recommended👌</Link>
+              <Link to="/Recommended">Recommend❓</Link>
             </button>
             <button className="btn" type="button">
               <Link to="/Bio">Bioℹ️</Link>
             </button>
-            <button className="btn" type="button" onClick={() => auth.logout()}>
-              Logout
+            <button className="btn" type="button">
+              <Link to="/WantToRead">Want to Read⭕</Link>
             </button>
-          </div>
+            <button className="btn" type="button">
+              <Link to="/ReadPage">Books Read✅ </Link>
+            </button>
+            {auth.loggedIn() && (
+  <button className="btn-logout" type="button" onClick={() => auth.logout()}>
+    Logout
+  </button>
+)}
           </>
         )}
       </div>
-        </div>
-      </div>
-
+    </div>
   );
 };
 

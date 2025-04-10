@@ -1,8 +1,9 @@
-/* Navbar Styling */
 .display-flex {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
 }
 
 .py-2 {
@@ -15,30 +16,27 @@
   padding-right: 30px;
 }
 
-/* Sharpen the background with a gradient and better shadows */
 .mint-green {
-  background: linear-gradient(135deg, #121212, #1db954); /* Gradient background for a sharp effect */
+  background: linear-gradient(135deg, #121212, #093619);
   color: white;
   border-bottom: 2px solid #333;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6); /* Deeper shadow to add more depth */
-  border-radius: 8px; /* Soft rounded corners */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Navbar Header Styling */
 h1 {
   font-size: 32px;
   font-weight: bold;
   color: #1db954;
   margin: 0;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Light text shadow to give it more depth */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* Button Styling */
-.btn {
+.btn, .btn-login, .btn-logout {
   background-color: transparent;
   border: none;
-  margin: 0 10px;
+  margin: 5px;
   padding: 10px 20px;
   color: #fff;
   font-size: 16px;
@@ -46,7 +44,7 @@ h1 {
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 4px; /* Rounded buttons for a smooth, sharp feel */
+  border-radius: 50px;
 }
 
 .btn a {
@@ -57,10 +55,19 @@ h1 {
 .btn:hover {
   background-color: #1db954;
   transform: scale(1.05);
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 10px 5px rgba(29, 185, 84, 0.8);  /* Green glow on hover */
 }
 
-/* Last button (logout) styling */
+.btn-login, .btn-logout {
+  background-color: #1db954;
+  color: white;
+}
+
+.btn-login:hover, .btn-logout:hover {
+  background-color: #1a9e42;
+  box-shadow: 0px 0px 10px 5px rgba(29, 185, 84, 0.8);  /* Green glow on hover */
+}
+
 .btn:last-child {
   background-color: #f04e23;
 }
@@ -69,21 +76,22 @@ h1 {
   background-color: #f04e23;
 }
 
-/* Mobile View - Dropdown */
 @media (max-width: 768px) {
   .display-flex {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
   }
 
   h1 {
     font-size: 28px;
     margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
   }
 
   .navbar-links {
-    display: none;  /* Hide links by default */
+    display: none;
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
@@ -91,7 +99,7 @@ h1 {
   }
 
   .navbar-links.active {
-    display: flex; /* Show links when active */
+    display: flex;
   }
 
   .btn {
@@ -101,7 +109,6 @@ h1 {
     padding: 12px 0;
   }
 
-  /* Hamburger Icon */
   .hamburger {
     display: block;
     cursor: pointer;
@@ -121,7 +128,6 @@ h1 {
     transition: 0.4s;
   }
 
-  /* Hamburger to X transformation */
   .hamburger.active div:nth-child(1) {
     transform: rotate(-45deg) translate(-5px, 6px);
   }
@@ -132,5 +138,51 @@ h1 {
 
   .hamburger.active div:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
+  }
+}
+
+@media (min-width: 769px) {
+  .display-flex {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h1 {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .navbar-links .btn {
+    margin: 5px;
+    width: 30%;
+    text-align: center;
+  }
+
+  .navbar-links .btn:nth-child(n+7) {
+    clear: both;
+  }
+
+  .navbar-links .btn:nth-child(1),
+  .navbar-links .btn:nth-child(2),
+  .navbar-links .btn:nth-child(3) {
+    margin-right: 10px;
+  }
+
+  .navbar-links .btn:nth-child(4),
+  .navbar-links .btn:nth-child(5),
+  .navbar-links .btn:nth-child(6) {
+    margin-left: 10px;
   }
 }

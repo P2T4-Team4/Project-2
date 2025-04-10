@@ -72,3 +72,20 @@
     }
   }
   
+  .search-full {
+    display: inline;
+  }
+  
+  .search-short {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .search-full {
+      display: none;
+    }
+  
+    .search-short {
+      display: inline;
+    }
+  }
