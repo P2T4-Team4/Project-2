@@ -27,7 +27,10 @@ return (
         placeholder="Search for books..."
         className="search-input"
       />
-      <button className="search-button">Search</button>
+      <button className="search-button">
+  <span className="search-full">Search</span>
+  <span className="search-short">S</span>
+</button>
     </form>
   );
 };
