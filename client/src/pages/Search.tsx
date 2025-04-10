@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import GenreRow from "../components/GenreRow";
 import Book from "../interfaces/Book";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "/api"
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);

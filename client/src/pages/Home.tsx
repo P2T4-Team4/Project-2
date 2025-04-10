@@ -7,7 +7,7 @@ import auth from "../utils/auth.js";
 
 const genres = ["Fiction", "History", "Mystery", "Science Fiction", "Fantasy", "Romance"];
 
-const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API; adjust as needed
+const API_URL = "/api"; // Base URL for your API; adjust as needed
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Record<string, Book[]>>({}); // 
