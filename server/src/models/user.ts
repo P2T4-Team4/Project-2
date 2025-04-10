@@ -1,8 +1,7 @@
-import { DataTypes, Sequelize, Model, Optional, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, Association } from 'sequelize';
+import { DataTypes, Sequelize, Model, Optional,  } from 'sequelize';
 import bcrypt from 'bcrypt';
-import Book from './book';  // Import the Book model
+import Book from './book';  
 
-// Define the attributes for the User model
 interface UserAttributes {
   id: number;
   username: string;
@@ -21,18 +20,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-
-  public addWantToRead!: BelongsToManyAddAssociationMixin<Book, number>;
-  public getWantToRead!: BelongsToManyGetAssociationsMixin<Book>;
-
-
-  public addReadBooks!: BelongsToManyAddAssociationMixin<Book, number>;
-  public getReadBooks!: BelongsToManyGetAssociationsMixin<Book>;
-
-  public static override associations: {
-    wantToRead: Association<User, Book>;
-    readBooks: Association<User, Book>;
-  };
 
   // Method to hash and set the password for the user
   public async setPassword(password: string) {
