@@ -10,8 +10,8 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     name: "Doyle Martin",
-    intro: "",
-    bio: "",
+    intro: "Doyle is from Reno, Nevada, and he currently lives in Montreal, Canada.",
+    bio: "I am a full stack bootcamp student through Columbia University. I enjoy traveling, reading, and spending time with my family.",
     imageUrl: "",
   },
   {
@@ -22,9 +22,9 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Chris Del Grosso",
-    intro: "Hello everyone, my name is Chris and I am from Boston, MA.",
-    bio: "I am a full stack bootcamp student through Columbia University.  He enjoys skiing, golfing, and speanding time with friends and family.",
-    imageUrl: "",
+    intro: "Chris is from Boston, MA.",
+    bio: "Chris is a full stack bootcamp student through Columbia University.  He enjoys skiing, golfing, and speanding time with friends and family.",
+    imageUrl: "../assets/images/chris.jpg",
   },
 ];
 
