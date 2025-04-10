@@ -6,13 +6,13 @@ import '../CSS/Recommend.css';
 
 // const GOOGLE_BOOKS_API_KEY = 'AIzaSyBWlIaquf4-vAgM-6c8A8ICfKbBXsgobU8';
 const GoogleBooksAPI = 'https://www.googleapis.com/books/v1/volumes?q=';
-const API_URL = import.meta.env.VITE_API_URL;
+// const API_URL = import.meta.env.VITE_API_URL;
 
 const BookRecommendations: React.FC = () => {
   const [savedBooks, setSavedBooks] = useState<Book[]>([]);
   const [recommendedBooks, setRecommendedBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
-
+  savedBooks
   // Fetch saved books from localStorage
   useEffect(() => {
     const wantToReadBooks = JSON.parse(localStorage.getItem('wantToReadBooks') || '[]');

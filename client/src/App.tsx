@@ -1,5 +1,5 @@
-import { Outlet, Navigate } from 'react-router-dom';
-import auth from './utils/auth.js';
+import { Outlet } from 'react-router-dom';
+// import auth from './utils/auth.js';
 import Navbar from './components/Navbar.js';
 
 function App() {
