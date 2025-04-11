@@ -1,6 +1,6 @@
 // Assuming `Auth` utility is being used to retrieve the token.
 // import Auth from '../utils/auth.js';
-import { UserLogin } from "../interfaces/UserLogin";
+// import { UserLogin } from "../interfaces/UserLogin";
 
 const retrieveUsers = async () => {
   try {
@@ -13,7 +13,7 @@ const retrieveUsers = async () => {
     }
 
     // Send a request to the backend with the Authorization header
-    const response = await fetch('http://localhost:3000/api/users', {  // Make sure URL is correct
+    const response = await fetch('/api/users', {  // Make sure URL is correct
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`  

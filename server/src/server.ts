@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-import cors from "cors";
+// import cors from "cors";
 
 import { sequelize } from "./config/connection.js";
 // import routes from "./routes/index.js";
@@ -14,16 +14,19 @@ import { userRouter } from "./routes/api/user-routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 const forceDatabaseRefresh = false;
-
+app.use(express.static("../client/dist"));
 
 // === Middleware ===
 app.use(express.json());
 
-app.use(cors({
-  origin: 'http://localhost:3001', 
-  credentials: true
-}));
+// app.use(cors({
+//   origin: 'http://localhost:3001', 
+//   credentials: true
+// }));
 
 // === API Routes ===
 app.use("/api/books", bookRoutes);               

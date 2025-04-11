@@ -1,10 +1,10 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
+// import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
 import { register } from "../api/authAPI";  // Import the register function from the API
-import { UserRegister } from "../interfaces/UserRegister";  // Import the interface for UserRegister
+import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserRegister
 
 const Register = () => {
-  const [registerData, setRegisterData] = useState<UserRegister>({
+  const [registerData, setRegisterData] = useState<UserLogin>({
     username: '',
     password: '',
   });
@@ -12,7 +12,7 @@ const Register = () => {
   const [successMessage, setSuccessMessage] = useState<string>(''); // State to store success message
   const [errorMessage, setErrorMessage] = useState<string>(''); // State to store error message
   
-  const navigate = useNavigate();  // Get the navigate function for navigation
+  // const navigate = useNavigate();  // Get the navigate function for navigation
   
   // Handle changes in the input fields
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -30,7 +30,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Call the register API endpoint with registerData
-      const data = await register(registerData);
+      await register(registerData);
       setSuccessMessage('Successfully registered, please log in!');
       // setErrorMessage('');
       // navigate('/login');  // Redirect to the login page after successful registration

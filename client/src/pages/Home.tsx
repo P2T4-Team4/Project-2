@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import GenreRow from "../components/GenreRow.js";
 import Book from "../interfaces/Book.js";
 import "../CSS/Recommend.css";
-import { getBookLists, updateBookList } from "../api/booksAPI.js";
+import { getBookLists } from "../api/booksAPI.js";
 import auth from "../utils/auth.js";
 
 const genres = ["Fiction", "History", "Mystery", "Science Fiction", "Fantasy", "Romance"];
 
-const API_URL = import.meta.env.VITE_API_URL; // Base URL for your API; adjust as needed
+const API_URL = "/api"; // Base URL for your API; adjust as needed
 
 const Home: React.FC = () => {
     const [books, setBooks] = useState<Record<string, Book[]>>({}); // 
@@ -67,21 +67,33 @@ const Home: React.FC = () => {
       // }, [wantToRead, readBooks]);
     
 
-          return (
+      return (
+        <>
+          {Object.keys(books).length === 0 ? (
+            <p>Loading books...</p>
+          ) : (
+            <>
+              {genres.map((genre) => (
+                <div key={genre}>
+                  
+                  <GenreRow
+                    key={genre}
+                    genre={genre}
+                    books={books[genre] || []}
+                    wantToRead={wantToRead}
+                    readBooks={readBooks}
+                    // setWantToRead={setWantToRead}
+                    // setReadBooks={setReadBooks}
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </>
+      );
+    };
+    
+    export default Home;
+    
 
-                <>{Object.keys(books).length === 0 ? (
-                  <p>Loading books...</p>
-                ) : (
-                  <>
-                    <p>Explore your favorite genres:</p>
-                    {genres.map((genre) => (
-                      <GenreRow key={genre} genre={genre} books={books[genre] || []} />
-                    ))}
-                  </>
-                )}
-                </>
-            )}
-        
 
-
-export default Home;
