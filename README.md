@@ -29,3 +29,27 @@ Welcome to **BookWorm**, your new favorite sidekick for all things books! Whethe
 - **Deployment**: Render
 
 ## 💾 How to Use Locally
+# In one terminal, start the backend
+- cd server
+- npm run dev
+
+# In another terminal, start the frontend
+- cd client
+- npm run dev
+
+## Installation 
+# Clone the repo
+- git clone https://github.com/P2T4-Team4/Book-Worm
+- cd bookworm
+
+# Install backend dependencies
+- cd server
+- npm install
+
+# Install frontend dependencies
+- cd ../client
+- npm install
+
+## Live site
+- https://book-tracker-p0b4.onrender.com/
+![alt text](image.png)
